@@ -11,12 +11,19 @@ import { ChangeEvent, useState } from "react";
 import registerValidationSchema from "@/src/schema/register.schema";
 import PSForm from "@/src/componsnts/form/PSForm";
 import PSInput from "@/src/componsnts/form/PSInput";
-import { UserRoundPlus } from "@/src/componsnts/icons";
+import {
+  EyeFilledIcon,
+  EyeSlashFilledIcon,
+  UserRoundPlus,
+} from "@/src/componsnts/icons";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
 
 export default function RegisterPage() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
+
   const { mutate: handleUserRegistration, isPending } = useUserRegistration();
 
   //   useEffect(() => {
@@ -85,10 +92,20 @@ export default function RegisterPage() {
           </div>
           <div className="py-3">
             <PSInput
+              endContent={
+                <button
+                  aria-label="toggle password visibility"
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? <EyeSlashFilledIcon /> : <EyeFilledIcon />}
+                </button>
+              }
               label="Password"
               name="password"
               size="sm"
-              type="password"
+              type={isVisible ? "text" : "password"}
             />
           </div>
           {imagePreviews.length > 0 && (

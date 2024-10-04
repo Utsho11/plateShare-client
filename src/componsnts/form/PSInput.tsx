@@ -1,6 +1,7 @@
 "use client";
 
 import { Input } from "@nextui-org/input";
+import { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface IProps {
@@ -10,6 +11,8 @@ interface IProps {
   type?: string;
   label: string;
   name: string;
+  endContent?: ReactNode;
+  startContent?: ReactNode;
 }
 
 export default function PSInput({
@@ -19,6 +22,8 @@ export default function PSInput({
   type = "text",
   label,
   name,
+  endContent,
+  startContent,
 }: IProps) {
   const {
     register,
@@ -28,11 +33,13 @@ export default function PSInput({
   return (
     <Input
       {...register(name)}
+      endContent={endContent}
       errorMessage={errors[name] ? (errors[name].message as string) : ""}
       isInvalid={!!errors[name]}
       label={label}
       required={required}
       size={size}
+      startContent={startContent}
       type={type}
       variant={variant}
     />
