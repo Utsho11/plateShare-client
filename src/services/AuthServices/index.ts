@@ -44,7 +44,7 @@ export const changePassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       "/auth/change-password",
-      userData
+      userData,
     );
 
     return data;
@@ -76,6 +76,8 @@ export const getCurrentUser = async () => {
       role: decodedToken.role,
       status: decodedToken.status,
       profilePhoto: decodedToken.profilePhoto,
+      followers: decodedToken.followers,
+      followings: decodedToken.followings,
     };
   }
 

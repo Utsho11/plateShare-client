@@ -7,30 +7,31 @@ import { SidebarOptions } from "./SidebarOptions";
 import { adminLinks, userLinks } from "./constants";
 
 import { useUser } from "@/src/context/user.provider";
+import { EditIcon } from "../../icons";
 
 const Sidebar = () => {
   const { user } = useUser();
 
   return (
     <div>
-      <div className="rounded-xl bg-default-100 p-2">
-        <div className="h-[100vh-100px] w-full rounded-md">
+      <div className="rounded-xl bg-[#170F21] p-2">
+        <div className="h-full w-full rounded-md">
           <Image
             alt="item"
             className="object-cover object-center rounded-md"
             src={user?.profilePhoto as string}
           />
         </div>
-        <div className="my-3">
+        <div className="my-3 text-white">
           <h1 className="text-2xl font-semibold">{user?.name}</h1>
           <p className="break-words text-sm">{user?.email}</p>
         </div>
         <Button
           as={Link}
           className="mt-2 w-full rounded-md"
-          href={"/profile/create-post"}
+          href={"/profile/edit-profile"}
         >
-          Create a post
+          <EditIcon /> Edit Profile
         </Button>
       </div>
       <div className="mt-3 space-y-2 rounded-xl bg-default-100 p-2">

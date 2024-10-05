@@ -20,7 +20,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex w-full flex-col items-center justify-center">
+      <div className="h-full flex w-full flex-col bg-[#170F21] text-white py-8 rounded items-center justify-center">
         <div className="flex flex-col items-center">
           <div className="flex">
             <Logo />
