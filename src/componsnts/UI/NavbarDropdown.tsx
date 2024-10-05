@@ -32,10 +32,16 @@ export default function NavbarDropdown() {
     router.push(pathname);
   };
 
+  console.log(user);
+
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Avatar className="cursor-pointer" name="Joe" />
+        <Avatar
+          className="cursor-pointer"
+          name={user?.name}
+          src={user?.profilePhoto}
+        />
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem onClick={() => handleNavigation("/profile")}>
