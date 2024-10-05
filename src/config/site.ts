@@ -17,18 +17,18 @@ export const siteConfig = {
       href: "/about",
     },
   ],
-  navMenuItems: [
+  dropdownMenuItems: [
     {
-      label: "Home",
-      href: "/",
+      label: "Profile",
+      href: "/profile",
     },
     {
-      label: "All Recipies",
-      href: "/all-recipies",
+      label: "Settings",
+      href: "/profile/setting",
     },
     {
-      label: "About",
-      href: "/about",
+      label: " Create Post",
+      href: "/profile/create-post",
     },
   ],
 };

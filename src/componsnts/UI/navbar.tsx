@@ -9,7 +9,6 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@nextui-org/navbar";
-import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
@@ -84,24 +83,38 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
+        <div className="mx-4 mt-2 flex flex-col items-center gap-2">
+          {siteConfig.navItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
+              <NextLink
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                )}
+                color="foreground"
+                href={item.href}
               >
                 {item.label}
-              </Link>
+              </NextLink>
             </NavbarMenuItem>
           ))}
+        </div>
+        <div className="mx-4 mt-2 flex flex-col items-center gap-2">
+          {user?.email ? (
+            <NavbarItem className="flex gap-2">
+              <NavbarDropdown />
+            </NavbarItem>
+          ) : (
+            <NavbarItem className="flex gap-2">
+              <Button
+                className="bg-gradient-to-tr from-blue-500 to-slate-700 text-white shadow-lg"
+                startContent={<LoginIcon />}
+                onClick={() => router.push("/login")}
+              >
+                Login
+              </Button>
+            </NavbarItem>
+          )}
         </div>
       </NavbarMenu>
     </NextUINavbar>

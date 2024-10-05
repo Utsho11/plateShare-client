@@ -32,8 +32,6 @@ export default function NavbarDropdown() {
     router.push(pathname);
   };
 
-  console.log(user);
-
   return (
     <Dropdown>
       <DropdownTrigger>
