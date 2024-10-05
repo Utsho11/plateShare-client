@@ -1,17 +1,22 @@
 "use client";
 import { Button } from "@nextui-org/button";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import PSForm from "@/src/componsnts/form/PSForm";
 import PSInput from "@/src/componsnts/form/PSInput";
 import { Logo } from "@/src/componsnts/icons";
+import { logout } from "@/src/services/AuthServices";
+import { useUserChangePassword } from "@/src/hooks/auth.hook";
 
-const SettingPage = () => {
+const Page = () => {
+  const { mutate: handleChangePassword, isPending } = useUserChangePassword();
+  const router = useRouter();
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    handleChangePassword(data);
+    logout();
+    router.push("/login");
   };
-
-  const isPending = false;
 
   return (
     <>
@@ -22,6 +27,9 @@ const SettingPage = () => {
             <p className="font-bold text-inherit">PlateShare</p>
           </div>
           <h3 className="my-2 text-2xl font-bold">Change Your Password</h3>
+          <p className="text-sm">
+            You have to login after changing the password.
+          </p>
         </div>
         <div className="w-[22rem]">
           <PSForm onSubmit={onSubmit}>
@@ -56,4 +64,4 @@ const SettingPage = () => {
   );
 };
 
-export default SettingPage;
+export default Page;

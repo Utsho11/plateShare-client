@@ -40,6 +40,18 @@ export const loginUser = async (userData: FieldValues) => {
     throw new Error(error);
   }
 };
+export const changePassword = async (userData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post(
+      "/auth/change-password",
+      userData
+    );
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
 
 //logout
 export const logout = () => {

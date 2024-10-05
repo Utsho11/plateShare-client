@@ -23,7 +23,7 @@ import { siteConfig } from "@/src/config/site";
 import { useUser } from "@/src/context/user.provider";
 
 export const Navbar = () => {
-  const { user, isLoading } = useUser();
+  const { user } = useUser();
   const router = useRouter();
 
   return (

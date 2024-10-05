@@ -45,11 +45,13 @@ export default function NavbarDropdown() {
         <DropdownItem onClick={() => handleNavigation("/profile")}>
           Profile
         </DropdownItem>
-        <DropdownItem onClick={() => handleNavigation("/profile/setting")}>
-          Settings
+        <DropdownItem
+          onClick={() => handleNavigation("/profile/change-password")}
+        >
+          Change Password
         </DropdownItem>
         <DropdownItem onClick={() => handleNavigation("/profile/create-post")}>
-          Create Post
+          Post Recipe
         </DropdownItem>
         <DropdownItem
           key="delete"
