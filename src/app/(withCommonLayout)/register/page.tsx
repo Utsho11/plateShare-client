@@ -14,6 +14,7 @@ import PSInput from "@/src/componsnts/form/PSInput";
 import {
   EyeFilledIcon,
   EyeSlashFilledIcon,
+  Logo,
   UserRoundPlus,
 } from "@/src/componsnts/icons";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
@@ -63,13 +64,13 @@ export default function RegisterPage() {
   // }
 
   return (
-    <div
-      className="flex h-[100vh-100px] flex-col items-center justify-center"
-      style={{ padding: "5rem 0" }}
-    >
-      <h3 className="my-2 text-xl font-bold">Register with PlateShare</h3>
+    <div className="flex h-[100vh-100px] flex-col items-center justify-center">
+      <div className="flex flex-col items-center">
+        <Logo />
+        <h3 className="my-2 text-xl font-bold">Register with PlateShare</h3>
+      </div>
       <p className="mb-4">A social platform for recipe sharing.</p>
-      <div style={{ width: "20rem" }}>
+      <div className="w-[22rem]">
         <PSForm
           //! Only for development
           defaultValues={{
@@ -113,15 +114,16 @@ export default function RegisterPage() {
               {imagePreviews.map((imageDataUrl) => (
                 <div
                   key={imageDataUrl}
-                  className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
+                  className="relative size-54 rounded-xl border-2 border-dashed border-default-300 p-2"
                 >
                   <Image
+                    isZoomed
                     alt="item"
                     as={NextImage}
                     className="object-cover object-center rounded-md"
-                    height={200}
+                    height={140}
                     src={imageDataUrl}
-                    width={300}
+                    width={140}
                   />
                 </div>
               ))}
@@ -160,7 +162,7 @@ export default function RegisterPage() {
             </Button>
           )}
         </PSForm>
-        <div className="text-center" style={{ padding: "2rem 0" }}>
+        <div className="text-center">
           Already have an account ? <Link href={"/login"}>Login</Link>
         </div>
       </div>

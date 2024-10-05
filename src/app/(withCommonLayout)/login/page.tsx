@@ -14,7 +14,8 @@ import loginValidationSchema from "@/src/schema/login.schema";
 import {
   EyeFilledIcon,
   EyeSlashFilledIcon,
-  UserIcon,
+  LoginIcon,
+  Logo,
 } from "@/src/componsnts/icons";
 import { useUser } from "@/src/context/user.provider";
 
@@ -48,13 +49,13 @@ const LoginPage = () => {
   return (
     <>
       {/* {isPending && <Loading />} */}
-      <div
-        className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center"
-        style={{ padding: "7rem 0" }}
-      >
-        <h3 className="my-2 text-2xl font-bold">Login with PlateShare</h3>
+      <div className="flex h-[calc(100vh-100px)] w-full flex-col items-center justify-center">
+        <div className="flex flex-col items-center">
+          <Logo />
+          <h3 className="my-2 text-2xl font-bold">Login with PlateShare</h3>
+        </div>
         <p className="mb-4">Welcome Back! Let&lsquo;s Get Started</p>
-        <div style={{ width: "25rem" }}>
+        <div className="w-[22rem]">
           <PSForm
             resolver={zodResolver(loginValidationSchema)}
             onSubmit={onSubmit}
@@ -92,15 +93,21 @@ const LoginPage = () => {
               <Button
                 className="my-3 w-full bg-default-900 border-2 text-default"
                 size="lg"
-                startContent={<UserIcon />}
+                startContent={<LoginIcon />}
                 type="submit"
               >
                 Login
               </Button>
             )}
           </PSForm>
-          <div className="text-center" style={{ margin: "3rem" }}>
-            Don&lsquo;t have account ? <Link href={"/register"}>Register</Link>
+          <div className="text-center">
+            Don&lsquo;t have account ?{" "}
+            <Link
+              className="hover:text-primary-500 underline"
+              href={"/register"}
+            >
+              Register
+            </Link>
           </div>
         </div>
       </div>
