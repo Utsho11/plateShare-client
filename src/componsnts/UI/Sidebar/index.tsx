@@ -3,11 +3,12 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { Image } from "@nextui-org/image";
 
+import { EditIcon } from "../../icons";
+
 import { SidebarOptions } from "./SidebarOptions";
 import { adminLinks, userLinks } from "./constants";
 
 import { useUser } from "@/src/context/user.provider";
-import { EditIcon } from "../../icons";
 
 const Sidebar = () => {
   const { user } = useUser();
@@ -26,13 +27,17 @@ const Sidebar = () => {
           <h1 className="text-2xl font-semibold">{user?.name}</h1>
           <p className="break-words text-sm">{user?.email}</p>
         </div>
-        <Button
-          as={Link}
-          className="mt-2 w-full rounded-md"
-          href={"/profile/edit-profile"}
-        >
-          <EditIcon /> Edit Profile
-        </Button>
+        {user?.role === "USER" ? (
+          <Button
+            as={Link}
+            className="mt-2 w-full rounded-md"
+            href={"/profile/edit-profile"}
+          >
+            <EditIcon /> Edit Profile
+          </Button>
+        ) : (
+          ""
+        )}
       </div>
       <div className="mt-3 space-y-2 rounded-xl bg-default-100 p-2">
         <SidebarOptions

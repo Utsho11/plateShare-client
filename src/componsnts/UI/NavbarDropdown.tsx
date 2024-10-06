@@ -41,27 +41,55 @@ export default function NavbarDropdown() {
           src={user?.profilePhoto}
         />
       </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions">
-        <DropdownItem onClick={() => handleNavigation("/profile")}>
-          Profile
-        </DropdownItem>
-        <DropdownItem
-          onClick={() => handleNavigation("/profile/change-password")}
-        >
-          Change Password
-        </DropdownItem>
-        <DropdownItem onClick={() => handleNavigation("/profile/create-post")}>
-          Post Recipe
-        </DropdownItem>
-        <DropdownItem
-          key="delete"
-          className="text-danger"
-          color="danger"
-          onClick={() => handleLogout()}
-        >
-          Logout
-        </DropdownItem>
-      </DropdownMenu>
+      {user?.role === "ADMIN" ? (
+        <DropdownMenu aria-label="Static Actions">
+          <DropdownItem onClick={() => handleNavigation("/admin")}>
+            My Profile
+          </DropdownItem>
+          <DropdownItem
+            onClick={() => handleNavigation("/admin/create-category")}
+          >
+            Post Recipe
+          </DropdownItem>
+          <DropdownItem
+            onClick={() => handleNavigation("/profile/change-password")}
+          >
+            Change Password
+          </DropdownItem>
+          <DropdownItem
+            key="delete"
+            className="text-danger"
+            color="danger"
+            onClick={() => handleLogout()}
+          >
+            Logout
+          </DropdownItem>
+        </DropdownMenu>
+      ) : (
+        <DropdownMenu aria-label="Static Actions">
+          <DropdownItem onClick={() => handleNavigation("/profile")}>
+            Profile
+          </DropdownItem>
+          <DropdownItem
+            onClick={() => handleNavigation("/profile/post-recipe")}
+          >
+            Post Recipe
+          </DropdownItem>
+          <DropdownItem
+            onClick={() => handleNavigation("/profile/change-password")}
+          >
+            Change Password
+          </DropdownItem>
+          <DropdownItem
+            key="delete"
+            className="text-danger"
+            color="danger"
+            onClick={() => handleLogout()}
+          >
+            Logout
+          </DropdownItem>
+        </DropdownMenu>
+      )}
     </Dropdown>
   );
 }

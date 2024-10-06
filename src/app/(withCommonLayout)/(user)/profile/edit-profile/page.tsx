@@ -1,5 +1,5 @@
-const AboutPage = () => {
+const EditProfile = () => {
   return <div className="">This is Edit Profile page.</div>;
 };
 
-export default AboutPage;
+export default EditProfile;
