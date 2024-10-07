@@ -12,6 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/src/services/AuthServices";
 import { useUser } from "@/src/context/user.provider";
 import { protectedRoutes } from "@/src/constants";
+import { adminLinks, userLinks } from "./Sidebar/constants";
 
 export default function NavbarDropdown() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function NavbarDropdown() {
           src={user?.profilePhoto}
         />
       </DropdownTrigger>
-      {user?.role === "ADMIN" ? (
+      {/* {user?.role === "ADMIN" ? (
         <DropdownMenu aria-label="Static Actions">
           <DropdownItem onClick={() => handleNavigation("/admin")}>
             My Profile
@@ -88,6 +89,29 @@ export default function NavbarDropdown() {
           >
             Logout
           </DropdownItem>
+        </DropdownMenu>
+      )} */}
+      {user?.role === "Admin" ? (
+        <DropdownMenu aria-label="Static Actions">
+          {adminLinks.map((link, index) => (
+            <DropdownItem
+              key={index + 1}
+              onClick={() => handleNavigation(link.href)}
+            >
+              {link.label}
+            </DropdownItem>
+          ))}
+        </DropdownMenu>
+      ) : (
+        <DropdownMenu aria-label="Static Actions">
+          {userLinks.map((link, index) => (
+            <DropdownItem
+              key={index + 1}
+              onClick={() => handleNavigation(link.href)}
+            >
+              {link.label}
+            </DropdownItem>
+          ))}
         </DropdownMenu>
       )}
     </Dropdown>
