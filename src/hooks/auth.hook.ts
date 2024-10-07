@@ -6,6 +6,7 @@ import {
   changePassword,
   loginUser,
   registerUser,
+  subscribeUser,
 } from "../services/AuthServices";
 
 export const useUserRegistration = () => {
@@ -27,6 +28,22 @@ export const useUserLogin = () => {
     mutationFn: async (userData) => await loginUser(userData),
     onSuccess: () => {
       toast.success("User login successful.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useUserSubscription = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationKey: ["USER_SUBSCRIPTION"],
+    mutationFn: async (userId) => await subscribeUser(userId),
+    onSuccess: (response) => {
+      toast.loading("redirecting to payment page...");
+      if (response.data) {
+        window.location.href = response.data;
+      }
     },
     onError: (error) => {
       toast.error(error.message);

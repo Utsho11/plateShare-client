@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global styles for the light and dark themes */
+:root {
+  --background-color-light: #d2d1f4;
+  --background-color-dark: #1a1a1a;
+  --text-color-light: #000;
+  --text-color-dark: #fff;
+}
+
+[data-theme="light"] {
+  background-color: var(--background-color-light);
+  color: var(--text-color-light);
+}
+
+[data-theme="dark"] {
+  background-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+}

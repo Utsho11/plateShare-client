@@ -5,6 +5,7 @@ export const userLinks = [
   { href: "/profile/change-password", label: "Change Password" },
   { href: "/profile/followers", label: "My Followers" },
   { href: "/profile/followings", label: "My Following" },
+  { href: "/profile/buy-subscription", label: "Buy Subscription" },
 ];
 
 export const adminLinks = [

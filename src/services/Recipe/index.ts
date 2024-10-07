@@ -10,7 +10,7 @@ export const createRecipe = async (recipeData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     return data;

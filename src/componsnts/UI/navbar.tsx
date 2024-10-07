@@ -13,18 +13,32 @@ import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { Button } from "@nextui-org/button";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Tooltip } from "@nextui-org/tooltip";
 
 import NavbarDropdown from "./NavbarDropdown";
 
-import { LoginIcon, Logo } from "@/src/componsnts/icons";
+import { LoginIcon, Logo, LogOutIcon } from "@/src/componsnts/icons";
 import { ThemeSwitch } from "@/src/componsnts/UI/theme-switch";
 import { siteConfig } from "@/src/config/site";
 import { useUser } from "@/src/context/user.provider";
+import { logout } from "@/src/services/AuthServices";
+import { protectedRoutes } from "@/src/constants";
 
 export const Navbar = () => {
-  const { user } = useUser();
+  const { user, setIsLoading: userLoading } = useUser();
   const router = useRouter();
+
+  const pathname = usePathname();
+
+  const handleLogout = () => {
+    logout();
+    userLoading(true);
+
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
+  };
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -41,7 +55,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -63,6 +77,11 @@ export const Navbar = () => {
         {user?.email ? (
           <NavbarItem className="hidden sm:flex gap-2">
             <NavbarDropdown />
+            <Tooltip content="Logout" placement="bottom">
+              <Button isIconOnly color="danger" onClick={() => handleLogout()}>
+                <LogOutIcon />
+              </Button>
+            </Tooltip>
           </NavbarItem>
         ) : (
           <NavbarItem className="hidden sm:flex gap-2">
@@ -89,7 +108,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -101,8 +120,17 @@ export const Navbar = () => {
         </div>
         <div className="mx-4 mt-2 flex flex-col items-center gap-2">
           {user?.email ? (
-            <NavbarItem className="flex gap-2">
+            <NavbarItem className="flex flex-col gap-2">
               <NavbarDropdown />
+              <Tooltip content="Logout" placement="bottom">
+                <Button
+                  isIconOnly
+                  color="danger"
+                  onClick={() => handleLogout()}
+                >
+                  <LogOutIcon />
+                </Button>
+              </Tooltip>
             </NavbarItem>
           ) : (
             <NavbarItem className="flex gap-2">

@@ -40,11 +40,12 @@ export const loginUser = async (userData: FieldValues) => {
     throw new Error(error);
   }
 };
+
 export const changePassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       "/auth/change-password",
-      userData,
+      userData
     );
 
     return data;
@@ -57,6 +58,16 @@ export const changePassword = async (userData: FieldValues) => {
 export const logout = () => {
   cookies().delete("accessToken");
   cookies().delete("refreshToken");
+};
+
+export const subscribeUser = async (userId: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post("/auth/subscribe", userId);
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error);
+  }
 };
 
 //get user from token
