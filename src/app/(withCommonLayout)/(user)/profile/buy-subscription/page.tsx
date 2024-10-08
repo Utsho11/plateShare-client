@@ -3,11 +3,20 @@ import { Button } from "@nextui-org/button";
 
 import { useUser } from "@/src/context/user.provider";
 import { useUserSubscription } from "@/src/hooks/auth.hook";
+import { IUser } from "@/src/types";
+import { useGetUsers } from "@/src/hooks/users.hook";
 
 const SubscriptionPage = () => {
   const { user } = useUser();
-
+  const { data: userData, isLoading } = useGetUsers();
   const { mutate: handleUserSubscription, isPending } = useUserSubscription();
+
+  // Check if data is still loading
+  if (isLoading || !userData || !user) {
+    return <div>Loading...</div>;
+  }
+
+  const currentUser = userData?.data?.filter((u: IUser) => u._id === user._id);
 
   const handleSubscription = (id: string) => {
     handleUserSubscription({
@@ -21,7 +30,7 @@ const SubscriptionPage = () => {
 
   return (
     <div className="h-full flex w-full flex-col bg-[#170F21] text-white p-8 rounded items-center justify-center">
-      {user?.role === "PREMIUM" ? (
+      {currentUser[0]?.role === "PREMIUM" ? (
         <div className="text-center">
           <h1 className="text-3xl">You have been already subscribed.</h1>
           <p className="text-sm">Thank for subscribing us.</p>

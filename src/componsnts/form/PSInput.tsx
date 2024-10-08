@@ -34,7 +34,7 @@ export default function PSInput({
     <Input
       {...register(name)}
       endContent={endContent}
-      errorMessage={errors[name] ? (errors[name].message as string) : ""}
+      errorMessage={(errors[name]?.message as string) || ""}
       isInvalid={!!errors[name]}
       label={label}
       required={required}

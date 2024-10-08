@@ -7,17 +7,16 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/dropdown";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { adminLinks, userLinks } from "./Sidebar/constants";
 
 import { useUser } from "@/src/context/user.provider";
 
 export default function NavbarDropdown() {
-  const pathname = usePathname();
   const router = useRouter();
 
-  const { user, setIsLoading: userLoading } = useUser();
+  const { user } = useUser();
 
   const handleNavigation = (pathname: string) => {
     router.push(pathname);

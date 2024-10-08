@@ -12,10 +12,7 @@ export default function FXTextArea({
   label,
   variant = "bordered",
 }: IProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register } = useFormContext();
 
   return (
     <Textarea {...register(name)} label={label} minRows={6} variant={variant} />

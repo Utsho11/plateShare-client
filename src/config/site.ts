@@ -13,6 +13,10 @@ export const siteConfig = {
       href: "/all-recipe",
     },
     {
+      label: "Follow People",
+      href: "/follow-people",
+    },
+    {
       label: "About",
       href: "/about",
     },

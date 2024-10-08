@@ -1,7 +1,8 @@
 "use client";
+
+import "react-quill/dist/quill.snow.css";
 import { Controller, useFormContext } from "react-hook-form";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // Import the styles for the editor
 
 interface IProps {
   label: string;

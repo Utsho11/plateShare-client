@@ -1,5 +1,5 @@
 "use client";
-import "react-quill/dist/quill.snow.css";
+
 import { useForm, FormProvider, useFieldArray } from "react-hook-form";
 import { Button } from "@nextui-org/button";
 import { ChangeEvent, useState } from "react";
@@ -7,13 +7,13 @@ import { ChangeEvent, useState } from "react";
 import { useGetCategories } from "@/src/hooks/categories.hook";
 import PSInput from "@/src/componsnts/form/PSInput";
 import PSSelect from "@/src/componsnts/form/PSSelect";
-import PSRichTextEditor from "@/src/componsnts/form/PSRichTextEditor";
 import PSTimePicker from "@/src/componsnts/form/PSTimePicker";
 import { AddIcon, ImageIcon, TrashIcon } from "@/src/componsnts/icons";
 import { useCreateRecipe } from "@/src/hooks/recipe.hook";
 import { useUser } from "@/src/context/user.provider";
+import PSRichTextEditor from "@/src/componsnts/form/PSRichTextEditor";
 
-export default function PostRecipePage() {
+const PostRecipePage = () => {
   const {
     data: categoriesData,
     isLoading: categoryLoading,
@@ -51,7 +51,12 @@ export default function PostRecipePage() {
       }));
   }
   const methods = useForm();
-  const { control, handleSubmit } = methods;
+  const {
+    control,
+    handleSubmit,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    formState: { errors },
+  } = methods;
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -86,7 +91,7 @@ export default function PostRecipePage() {
   };
 
   return (
-    <div className="h-[100vh-100px] bg-[#170F21] text-white p-5 rounded">
+    <div className="min-h-[calc(100vh-100px)] bg-[#170F21] text-white p-5 rounded">
       <div className="text-center my-2">
         <h1 className="text-3xl font-semibold">Post Your Recipe</h1>
       </div>
@@ -184,4 +189,6 @@ export default function PostRecipePage() {
       </FormProvider>
     </div>
   );
-}
+};
+
+export default PostRecipePage;

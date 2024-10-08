@@ -6,7 +6,8 @@ import { SwitchProps, useSwitch } from "@nextui-org/switch";
 import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
-import { MoonFilledIcon, SunFilledIcon } from "../icons";
+
+import { SunFilledIcon, MoonFilledIcon } from "@/src/componsnts/icons";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -21,7 +22,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
   const isSSR = useIsSSR();
 
   const onChange = () => {
-    setTheme(theme === "custom-light" ? "dark" : "custom-light");
+    theme === "light" ? setTheme("dark") : setTheme("light");
   };
 
   const {
@@ -32,8 +33,8 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     getInputProps,
     getWrapperProps,
   } = useSwitch({
-    isSelected: theme === "dark",
-    "aria-label": `Switch to ${theme === "dark" ? "light" : "dark"} mode`,
+    isSelected: theme === "light" || isSSR,
+    "aria-label": `Switch to ${theme === "light" || isSSR ? "dark" : "light"} mode`,
     onChange,
   });
 
@@ -69,7 +70,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
           ),
         })}
       >
-        {isSelected ? (
+        {!isSelected || isSSR ? (
           <SunFilledIcon size={22} />
         ) : (
           <MoonFilledIcon size={22} />

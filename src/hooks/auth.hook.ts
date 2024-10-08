@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -36,6 +36,8 @@ export const useUserLogin = () => {
 };
 
 export const useUserSubscription = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<any, Error, FieldValues>({
     mutationKey: ["USER_SUBSCRIPTION"],
     mutationFn: async (userId) => await subscribeUser(userId),
@@ -44,6 +46,7 @@ export const useUserSubscription = () => {
       if (response.data) {
         window.location.href = response.data;
       }
+      queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
     },
     onError: (error) => {
       toast.error(error.message);

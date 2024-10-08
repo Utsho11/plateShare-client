@@ -21,8 +21,8 @@ export default function NotFoundPage() {
           moved.
         </p>
         <button
-          onClick={handleGoHome}
           className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors duration-300"
+          onClick={handleGoHome}
         >
           Go to Home
         </button>
