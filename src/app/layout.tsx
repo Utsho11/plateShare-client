@@ -3,10 +3,10 @@ import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 
 import { Providers } from "../lib/Providers";
+import Container from "../components/UI/Container";
 
 import { siteConfig } from "@/src/config/site";
 import { fontSans } from "@/src/config/fonts";
-import Container from "../componsnts/UI/Container";
 
 export const metadata: Metadata = {
   title: {

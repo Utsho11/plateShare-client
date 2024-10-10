@@ -2,9 +2,9 @@
 import { Button } from "@nextui-org/button";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
-import PSForm from "@/src/componsnts/form/PSForm";
-import PSInput from "@/src/componsnts/form/PSInput";
-import { AddIcon } from "@/src/componsnts/icons";
+import PSForm from "@/src/components/form/PSForm";
+import PSInput from "@/src/components/form/PSInput";
+import { AddIcon } from "@/src/components/icons";
 import { usePostCategory } from "@/src/hooks/categories.hook";
 
 const CreateCategory = () => {

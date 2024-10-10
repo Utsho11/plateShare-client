@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 import { IUser } from "@/src/types";
 import { useAddFollower } from "@/src/hooks/users.hook";
-import { boolean } from "zod";
 
 const PeopleCard = ({ people, user }: { people: IUser; user: IUser }) => {
   const [isFollowed, setIsFollowed] = useState(false);
@@ -44,7 +43,7 @@ const PeopleCard = ({ people, user }: { people: IUser; user: IUser }) => {
       {people._id === user._id ? (
         ""
       ) : (
-        <Card className="max-w-[340px]">
+        <Card className="max-w-full">
           <CardHeader className="justify-between">
             <div className="flex gap-5">
               <Avatar
@@ -89,7 +88,7 @@ const PeopleCard = ({ people, user }: { people: IUser; user: IUser }) => {
               </span>
             </span>
           </CardBody>
-          <CardFooter className="gap-3">
+          <CardFooter className="gap-5">
             <div className="flex gap-1">
               <p className="font-semibold text-default-400 text-small">
                 {people.followings?.length}

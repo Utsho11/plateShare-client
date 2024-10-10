@@ -1,5 +1,5 @@
 "use client";
-import { FollowerIcon, FollowingIcon } from "@/src/componsnts/icons";
+import { FollowerIcon, FollowingIcon } from "@/src/components/icons";
 import { useUser } from "@/src/context/user.provider";
 import { useGetUsers } from "@/src/hooks/users.hook";
 import { IUser } from "@/src/types";

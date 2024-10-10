@@ -3,9 +3,9 @@ import { Button } from "@nextui-org/button";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
-import PSForm from "@/src/componsnts/form/PSForm";
-import PSInput from "@/src/componsnts/form/PSInput";
-import { Logo } from "@/src/componsnts/icons";
+import PSForm from "@/src/components/form/PSForm";
+import PSInput from "@/src/components/form/PSInput";
+import { Logo } from "@/src/components/icons";
 import { logout } from "@/src/services/AuthServices";
 import { useUserChangePassword } from "@/src/hooks/auth.hook";
 

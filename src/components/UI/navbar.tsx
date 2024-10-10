@@ -18,8 +18,8 @@ import { Tooltip } from "@nextui-org/tooltip";
 
 import NavbarDropdown from "./NavbarDropdown";
 
-import { LoginIcon, Logo, LogOutIcon } from "@/src/componsnts/icons";
-import { ThemeSwitch } from "@/src/componsnts/UI/theme-switch";
+import { LoginIcon, Logo, LogOutIcon } from "@/src/components/icons";
+import { ThemeSwitch } from "@/src/components/UI/theme-switch";
 import { siteConfig } from "@/src/config/site";
 import { useUser } from "@/src/context/user.provider";
 import { logout } from "@/src/services/AuthServices";
@@ -55,7 +55,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}
@@ -108,7 +108,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                  "data-[active=true]:text-primary data-[active=true]:font-medium"
                 )}
                 color="foreground"
                 href={item.href}

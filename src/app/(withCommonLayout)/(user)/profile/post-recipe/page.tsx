@@ -1,17 +1,16 @@
 "use client";
-
-import { useForm, FormProvider, useFieldArray } from "react-hook-form";
 import { Button } from "@nextui-org/button";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
 
-import { useGetCategories } from "@/src/hooks/categories.hook";
-import PSInput from "@/src/componsnts/form/PSInput";
-import PSSelect from "@/src/componsnts/form/PSSelect";
-import PSTimePicker from "@/src/componsnts/form/PSTimePicker";
-import { AddIcon, ImageIcon, TrashIcon } from "@/src/componsnts/icons";
-import { useCreateRecipe } from "@/src/hooks/recipe.hook";
+import PSInput from "@/src/components/form/PSInput";
+import PSRichTextEditor from "@/src/components/form/PSRichTextEditor";
+import PSSelect from "@/src/components/form/PSSelect";
+import PSTimePicker from "@/src/components/form/PSTimePicker";
+import { AddIcon, ImageIcon, TrashIcon } from "@/src/components/icons";
 import { useUser } from "@/src/context/user.provider";
-import PSRichTextEditor from "@/src/componsnts/form/PSRichTextEditor";
+import { useGetCategories } from "@/src/hooks/categories.hook";
+import { useCreateRecipe } from "@/src/hooks/recipe.hook";
 
 const PostRecipePage = () => {
   const {
@@ -19,7 +18,7 @@ const PostRecipePage = () => {
     isLoading: categoryLoading,
     isSuccess: categorySuccess,
   } = useGetCategories();
-
+  const { user } = useUser();
   const { mutate: handleCreateRecipe, isPending } = useCreateRecipe();
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
@@ -37,6 +36,7 @@ const PostRecipePage = () => {
       };
 
       reader.readAsDataURL(file);
+      e.target.value = "";
     }
   };
 
@@ -67,7 +67,6 @@ const PostRecipePage = () => {
     append({ name: "ingredients" });
   };
 
-  const { user } = useUser();
   const onSubmit = (data: any) => {
     const cookingTimeObj = data.cookingTime;
     const formattedCookingTime = `${String(cookingTimeObj.hour).padStart(2, "0")}:${String(cookingTimeObj.minute).padStart(2, "0")}`;
@@ -89,6 +88,14 @@ const PostRecipePage = () => {
 
     handleCreateRecipe(formData);
   };
+
+  if (categoryLoading) {
+    return <p>Loading categories...</p>;
+  }
+
+  if (!categorySuccess || !categoriesData) {
+    return <p>Failed to load categories. Please try again later.</p>;
+  }
 
   return (
     <div className="min-h-[calc(100vh-100px)] bg-[#170F21] text-white p-5 rounded">
@@ -179,11 +186,9 @@ const PostRecipePage = () => {
             )}
           </div>
           <div className="my-5">
-            {isPending ? (
-              <Button isLoading>Loading...</Button>
-            ) : (
-              <Button type="submit">Post Recipe</Button>
-            )}
+            <Button disabled={isPending} type="submit">
+              {isPending ? "Posting..." : "Post Recipe"}
+            </Button>
           </div>
         </form>
       </FormProvider>

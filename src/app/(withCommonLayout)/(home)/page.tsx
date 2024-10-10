@@ -1,4 +1,4 @@
-import Landing from "@/src/componsnts/modules/home/Landing";
+import Landing from "@/src/components/modules/home/Landing";
 
 const Home = () => {
   return (

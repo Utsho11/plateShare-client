@@ -8,15 +8,15 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useUserLogin } from "@/src/hooks/auth.hook";
-import PSForm from "@/src/componsnts/form/PSForm";
-import PSInput from "@/src/componsnts/form/PSInput";
+import PSForm from "@/src/components/form/PSForm";
+import PSInput from "@/src/components/form/PSInput";
 import loginValidationSchema from "@/src/schema/login.schema";
 import {
   EyeFilledIcon,
   EyeSlashFilledIcon,
   LoginIcon,
   Logo,
-} from "@/src/componsnts/icons";
+} from "@/src/components/icons";
 import { useUser } from "@/src/context/user.provider";
 
 const LoginPage = () => {

@@ -1,5 +1,5 @@
-const Page = () => {
+const MyRecipePage = () => {
   return <div className="">This is Page page.</div>;
 };
 
-export default Page;
+export default MyRecipePage;

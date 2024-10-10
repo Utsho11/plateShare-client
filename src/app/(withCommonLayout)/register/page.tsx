@@ -9,14 +9,14 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
 
 import registerValidationSchema from "@/src/schema/register.schema";
-import PSForm from "@/src/componsnts/form/PSForm";
-import PSInput from "@/src/componsnts/form/PSInput";
+import PSForm from "@/src/components/form/PSForm";
+import PSInput from "@/src/components/form/PSInput";
 import {
   EyeFilledIcon,
   EyeSlashFilledIcon,
   Logo,
   UserRoundPlus,
-} from "@/src/componsnts/icons";
+} from "@/src/components/icons";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
 
 export default function RegisterPage() {

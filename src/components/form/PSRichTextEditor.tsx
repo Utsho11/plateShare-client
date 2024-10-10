@@ -2,7 +2,10 @@
 
 import "react-quill/dist/quill.snow.css";
 import { Controller, useFormContext } from "react-hook-form";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface IProps {
   label: string;

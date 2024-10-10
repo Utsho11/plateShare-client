@@ -10,11 +10,15 @@ import {
 } from "../services/AuthServices";
 
 export const useUserRegistration = () => {
+  const queryClient = useQueryClient();
+
   return useMutation<any, Error, FormData>({
     mutationKey: ["USER_REGISTRATION"],
     mutationFn: async (userData) => await registerUser(userData),
     onSuccess: () => {
       toast.success("User registration successful.");
+
+      queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
     },
     onError: (error) => {
       toast.error(error.message);
