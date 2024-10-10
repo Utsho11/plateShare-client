@@ -7,7 +7,7 @@ export default function ErrorPage({
   reset: () => void;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-blue-100 text-gray-700">
+    <div className="flex flex-col items-center justify-center min-h-screen text-gray-700">
       <div className="bg-white p-10 rounded-lg shadow-lg flex flex-col items-center">
         <h2 className="text-2xl font-semibold mb-2">
           Oops! Something went wrong!

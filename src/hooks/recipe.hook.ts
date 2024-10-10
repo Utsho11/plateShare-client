@@ -1,7 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { createRecipe, getAllRecipe } from "../services/Recipe";
+import {
+  createRecipe,
+  getAllRecipe,
+  getSingleRecipe,
+} from "../services/Recipe";
 
 export const useCreateRecipe = () => {
   const queryClient = useQueryClient();
@@ -24,5 +28,11 @@ export const useGetAllRecipe = () => {
   return useQuery({
     queryKey: ["GET_RECIPE"],
     queryFn: async () => await getAllRecipe(),
+  });
+};
+export const useGetSingleRecipe = (id: string) => {
+  return useQuery({
+    queryKey: ["GET_SINGLE_RECIPE"],
+    queryFn: async () => await getSingleRecipe(id),
   });
 };

@@ -11,6 +11,7 @@ import { AddIcon, ImageIcon, TrashIcon } from "@/src/components/icons";
 import { useUser } from "@/src/context/user.provider";
 import { useGetCategories } from "@/src/hooks/categories.hook";
 import { useCreateRecipe } from "@/src/hooks/recipe.hook";
+import Loading from "@/src/components/UI/Loading";
 
 const PostRecipePage = () => {
   const {
@@ -90,7 +91,7 @@ const PostRecipePage = () => {
   };
 
   if (categoryLoading) {
-    return <p>Loading categories...</p>;
+    return <Loading />;
   }
 
   if (!categorySuccess || !categoriesData) {

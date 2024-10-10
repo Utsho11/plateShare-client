@@ -28,3 +28,12 @@ export const getAllRecipe = async () => {
     throw new Error(error.message);
   }
 };
+export const getSingleRecipe = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.get(`recipe/${id}`);
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};

@@ -1,10 +1,15 @@
 "use client";
 import RecipeCard from "@/src/components/card/recipeCard";
+import Loading from "@/src/components/UI/Loading";
 import { useGetAllRecipe } from "@/src/hooks/recipe.hook";
 import { TRecipe } from "@/src/types";
 
 const AllRecipePage = () => {
-  const { data: recipeData } = useGetAllRecipe();
+  const { data: recipeData, isPending } = useGetAllRecipe();
+
+  if (isPending) {
+    return <Loading />; // Return loading spinner while fetching data
+  }
 
   if (!recipeData) {
     return <div>No recipes found.</div>; // Return message if no recipe data is available
