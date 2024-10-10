@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 import { useUserLogin } from "@/src/hooks/auth.hook";
 import PSForm from "@/src/components/form/PSForm";
@@ -29,7 +30,18 @@ const LoginPage = () => {
 
   const redirect = searchParams.get("redirect");
 
-  const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
+  const {
+    mutate: handleUserLogin,
+    isPending,
+    isSuccess,
+    data: userLoginResponse,
+  } = useUserLogin();
+
+  useEffect(() => {
+    if (userLoginResponse && !userLoginResponse.success) {
+      toast.error(userLoginResponse.message);
+    }
+  }, [userLoginResponse]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleUserLogin(data);

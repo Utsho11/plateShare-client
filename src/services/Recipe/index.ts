@@ -15,7 +15,12 @@ export const createRecipe = async (recipeData: FormData) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 
@@ -23,9 +28,16 @@ export const getAllRecipe = async () => {
   try {
     const { data } = await axiosInstance.get("/recipe/");
 
+    console.log(data);
+
     return data;
   } catch (error: any) {
-    throw new Error(error.message);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 export const getSingleRecipe = async (id: string) => {
@@ -34,6 +46,11 @@ export const getSingleRecipe = async (id: string) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error.message);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };

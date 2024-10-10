@@ -10,7 +10,12 @@ export const getCategories = async () => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error.message);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 
@@ -20,6 +25,11 @@ export const postCategory = async (category: FieldValues) => {
 
     return res.data;
   } catch (error: any) {
-    throw new Error(error);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };

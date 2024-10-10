@@ -9,7 +9,12 @@ export const getUsers = async () => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error.message);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 
@@ -17,11 +22,16 @@ export const addFollowing = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
       "/users/add-following",
-      userData,
+      userData
     );
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };

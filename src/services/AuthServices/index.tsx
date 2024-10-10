@@ -21,7 +21,12 @@ export const registerUser = async (userData: FormData) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 
@@ -35,9 +40,16 @@ export const loginUser = async (userData: FieldValues) => {
       cookies().set("refreshToken", data?.data?.refreshToken);
     }
 
+    console.log(data);
+
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 
@@ -45,12 +57,17 @@ export const changePassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       "/auth/change-password",
-      userData,
+      userData
     );
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 
@@ -66,31 +83,46 @@ export const subscribeUser = async (userId: FieldValues) => {
 
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
   }
 };
 
 //get user from token
+
 export const getCurrentUser = async () => {
-  const accessToken = cookies().get("accessToken")?.value;
+  const accessToken = await cookies().get("accessToken")?.value;
 
   let decodedToken = null;
 
-  if (accessToken) {
-    decodedToken = await jwtDecode(accessToken);
+  try {
+    if (accessToken) {
+      decodedToken = await jwtDecode(accessToken);
 
-    return {
-      _id: decodedToken._id,
-      name: decodedToken.name,
-      email: decodedToken.email,
-      mobileNumber: decodedToken.mobileNumber,
-      role: decodedToken.role,
-      status: decodedToken.status,
-      profilePhoto: decodedToken.profilePhoto,
-      followers: decodedToken.followers,
-      followings: decodedToken.followings,
+      return {
+        _id: decodedToken._id,
+        name: decodedToken.name,
+        email: decodedToken.email,
+        mobileNumber: decodedToken.mobileNumber,
+        role: decodedToken.role,
+        status: decodedToken.status,
+        profilePhoto: decodedToken.profilePhoto,
+        followers: decodedToken.followers,
+        followings: decodedToken.followings,
+      };
+    }
+
+    return decodedToken;
+  } catch (error) {
+    const data = {
+      success: false,
+      message: error,
     };
-  }
 
-  return decodedToken;
+    return data;
+  }
 };

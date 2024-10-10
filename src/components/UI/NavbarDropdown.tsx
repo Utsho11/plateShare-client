@@ -31,7 +31,7 @@ export default function NavbarDropdown() {
           src={user?.profilePhoto}
         />
       </DropdownTrigger>
-      {user?.role === "Admin" ? (
+      {user?.role === "ADMIN" ? (
         <DropdownMenu aria-label="Static Actions">
           {adminLinks.map((link, index) => (
             <DropdownItem

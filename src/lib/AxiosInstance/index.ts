@@ -12,6 +12,8 @@ axiosInstance.interceptors.request.use(
     const cookieStore = cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
 
+    console.log(accessToken);
+
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }
@@ -20,7 +22,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 axiosInstance.interceptors.response.use(
@@ -29,7 +31,7 @@ axiosInstance.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 export default axiosInstance;

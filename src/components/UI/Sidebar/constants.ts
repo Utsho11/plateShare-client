@@ -10,5 +10,6 @@ export const userLinks = [
 
 export const adminLinks = [
   { href: "/admin", label: "Admin" },
-  { href: "/admin/create-category", label: "Add Category" },
+  { href: "/admin/create-admin", label: "Add Admin" },
+  { href: "/admin/user-management", label: "User Management" },
 ];
