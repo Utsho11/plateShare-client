@@ -1,16 +1,6 @@
 "use client";
-import { Button } from "@nextui-org/button";
+
 import { Chip } from "@nextui-org/chip";
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@nextui-org/dropdown";
-import { ChipVariantProps } from "@nextui-org/theme";
-import { User } from "@nextui-org/user";
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
-import { Input } from "@nextui-org/input";
 import {
   Selection,
   SortDescriptor,
@@ -21,6 +11,17 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/table";
+import { ChipVariantProps } from "@nextui-org/theme";
+import { User } from "@nextui-org/user";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/dropdown";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
 import { Pagination } from "@nextui-org/pagination";
 
 import {
@@ -30,24 +31,32 @@ import {
   VerticalDotsIcon,
 } from "../icons";
 
-import { columns, roleOptions, statusOptions } from "@/src/constants";
 import { capitalize } from "@/src/utils/user.utils";
-import { IUser } from "@/src/types";
+import { TRecipe } from "@/src/types";
+import {
+  recipeColumns,
+  recipeStatusOptions,
+  typeOptions,
+} from "@/src/constants";
 
 const statusColorMap: Record<string, ChipVariantProps["color"]> = {
-  ACTIVE: "success",
+  PUBLISH: "success",
   BLOCK: "danger",
 };
+const typeColorMap: Record<string, ChipVariantProps["color"]> = {
+  PREMIUM: "warning",
+  FREE: "primary",
+};
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "type", "status", "actions"];
 
-export const UserTable = ({ users }: { users: IUser[] }) => {
+export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
     new Set(INITIAL_VISIBLE_COLUMNS),
   );
   const [statusFilter, setStatusFilter] = useState<Selection>("all");
-  const [roleFilter, setRoleFilter] = useState<Selection>("all");
+  const [typeFilter, setRoleFilter] = useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "age",
@@ -59,40 +68,40 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
   const hasSearchFilter = Boolean(filterValue);
 
   const headerColumns = useMemo(() => {
-    if (visibleColumns === "all") return columns;
+    if (visibleColumns === "all") return recipeColumns;
 
-    return columns.filter((column) =>
+    return recipeColumns.filter((column) =>
       Array.from(visibleColumns).includes(column.uid),
     );
   }, [visibleColumns]);
 
   const filteredItems = useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredUsers = [...recipies];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+      filteredUsers = filteredUsers.filter((recipe) =>
+        recipe.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (
       statusFilter !== "all" &&
-      Array.from(statusFilter).length !== statusOptions.length
+      Array.from(statusFilter).length !== recipeStatusOptions.length
     ) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+      filteredUsers = filteredUsers.filter((recipe) =>
+        Array.from(statusFilter).includes(recipe.recipeStatus),
       );
     }
     if (
-      roleFilter !== "all" &&
-      Array.from(roleFilter).length !== roleOptions.length
+      typeFilter !== "all" &&
+      Array.from(typeFilter).length !== typeOptions.length
     ) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(roleFilter).includes(user.role),
+      filteredUsers = filteredUsers.filter((recipe) =>
+        Array.from(typeFilter).includes(recipe.recipeType),
       );
     }
 
     return filteredUsers;
-  }, [users, filterValue, statusFilter, roleFilter]);
+  }, [recipies, filterValue, statusFilter, typeFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -104,47 +113,53 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = useMemo(() => {
-    return [...items].sort((a: IUser, b: IUser) => {
-      const first = a[sortDescriptor.column as keyof IUser] as number;
-      const second = b[sortDescriptor.column as keyof IUser] as number;
+    return [...items].sort((a: TRecipe, b: TRecipe) => {
+      const first = a[
+        sortDescriptor.column as keyof TRecipe
+      ] as unknown as number;
+      const second = b[
+        sortDescriptor.column as keyof TRecipe
+      ] as unknown as number;
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
 
-  const renderCell = useCallback((user: IUser, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof IUser];
+  const renderCell = useCallback((recipe: TRecipe, columnKey: React.Key) => {
+    const cellValue = recipe[columnKey as keyof TRecipe];
 
     switch (columnKey) {
       case "name":
         return (
           <User
-            avatarProps={{ radius: "lg", src: user.profilePhoto }}
-            description={user.email}
+            avatarProps={{ radius: "lg", src: recipe.images![0] }}
+            description={recipe.email}
             name={cellValue}
           >
-            {user.email}
+            {recipe.email}
           </User>
         );
-      case "role":
+      case "type":
         return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {user.role}
-            </p>
-          </div>
+          <Chip
+            className="capitalize"
+            color={typeColorMap[recipe.recipeType]}
+            size="sm"
+            variant="flat"
+          >
+            {recipe.recipeType}
+          </Chip>
         );
       case "status":
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap[user.status]}
+            color={statusColorMap[recipe.recipeStatus]}
             size="sm"
             variant="flat"
           >
-            {cellValue}
+            {recipe.recipeStatus}
           </Chip>
         );
       case "actions":
@@ -234,7 +249,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
                 selectionMode="multiple"
                 onSelectionChange={setStatusFilter}
               >
-                {statusOptions.map((status) => (
+                {recipeStatusOptions.map((status) => (
                   <DropdownItem key={status.uid} className="capitalize">
                     {capitalize(status.name)}
                   </DropdownItem>
@@ -254,13 +269,13 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
                 disallowEmptySelection
                 aria-label="Table Columns"
                 closeOnSelect={false}
-                selectedKeys={roleFilter}
+                selectedKeys={typeFilter}
                 selectionMode="multiple"
                 onSelectionChange={setRoleFilter}
               >
-                {roleOptions.map((role) => (
-                  <DropdownItem key={role.uid} className="capitalize">
-                    {capitalize(role.name)}
+                {typeOptions.map((type) => (
+                  <DropdownItem key={type.uid} className="capitalize">
+                    {capitalize(type.name)}
                   </DropdownItem>
                 ))}
               </DropdownMenu>
@@ -282,7 +297,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
                 selectionMode="multiple"
                 onSelectionChange={setVisibleColumns}
               >
-                {columns.map((column) => (
+                {recipeColumns.map((column) => (
                   <DropdownItem key={column.uid} className="capitalize">
                     {capitalize(column.name)}
                   </DropdownItem>
@@ -296,7 +311,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">
-            Total {users.length} users
+            Total {recipies.length} recipies
           </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
@@ -315,11 +330,11 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
   }, [
     filterValue,
     statusFilter,
-    roleFilter,
+    typeFilter,
     visibleColumns,
     onSearchChange,
     onRowsPerPageChange,
-    users.length,
+    recipies.length,
     hasSearchFilter,
   ]);
 
@@ -382,7 +397,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No recipies found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item._id}>
             {(columnKey) => (

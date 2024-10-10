@@ -22,7 +22,7 @@ export const addFollowing = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
       "/users/add-following",
-      userData
+      userData,
     );
 
     return data;

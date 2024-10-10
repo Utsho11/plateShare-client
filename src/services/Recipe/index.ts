@@ -10,7 +10,7 @@ export const createRecipe = async (recipeData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     return data;
@@ -27,8 +27,6 @@ export const createRecipe = async (recipeData: FormData) => {
 export const getAllRecipe = async () => {
   try {
     const { data } = await axiosInstance.get("/recipe/");
-
-    console.log(data);
 
     return data;
   } catch (error: any) {

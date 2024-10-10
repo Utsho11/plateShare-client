@@ -12,4 +12,5 @@ export const adminLinks = [
   { href: "/admin", label: "Admin" },
   { href: "/admin/create-admin", label: "Add Admin" },
   { href: "/admin/user-management", label: "User Management" },
+  { href: "/admin/post-management", label: "Post Management" },
 ];

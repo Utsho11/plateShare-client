@@ -18,7 +18,7 @@ const AllRecipePage = () => {
   return (
     <div className="">
       <h1 className="text-center text-3xl sm:my-8 my-6">All Recipies</h1>
-      <div className=""></div>
+      <div className="" />
       <div className="grid sm:grid-cols-3 lg:gap-3 py-8">
         {recipeData?.data?.map((recipe: TRecipe) => (
           <RecipeCard key={recipe._id} recipe={recipe} />

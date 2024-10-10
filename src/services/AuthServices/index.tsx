@@ -40,8 +40,6 @@ export const loginUser = async (userData: FieldValues) => {
       cookies().set("refreshToken", data?.data?.refreshToken);
     }
 
-    console.log(data);
-
     return data;
   } catch (error: any) {
     const data = {
@@ -57,7 +55,7 @@ export const changePassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       "/auth/change-password",
-      userData
+      userData,
     );
 
     return data;

@@ -14,8 +14,20 @@ const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
+const recipeColumns = [
+  { name: "NAME", uid: "name", sortable: true },
+  { name: "TYPE", uid: "type", sortable: true },
+  { name: "STATUS", uid: "status", sortable: true },
+  { name: "ACTIONS", uid: "actions" },
+];
+
 const statusOptions = [
   { name: "Active", uid: "ACTIVE" },
+  { name: "Block", uid: "BLOCK" },
+];
+
+const recipeStatusOptions = [
+  { name: "Publish", uid: "PUBLISH" },
   { name: "Block", uid: "BLOCK" },
 ];
 
@@ -25,4 +37,16 @@ const roleOptions = [
   { name: "Premium", uid: "PREMIUM" },
 ];
 
-export { columns, statusOptions, roleOptions };
+const typeOptions = [
+  { name: "free", uid: "FREE" },
+  { name: "Premium", uid: "PREMIUM" },
+];
+
+export {
+  columns,
+  statusOptions,
+  roleOptions,
+  typeOptions,
+  recipeStatusOptions,
+  recipeColumns,
+};
