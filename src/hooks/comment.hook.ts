@@ -7,7 +7,6 @@ import {
   getComment,
   postComment,
 } from "../services/CommentServices";
-import { TComment } from "../types";
 
 export const useGetComment = (id: string) => {
   return useQuery({

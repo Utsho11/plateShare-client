@@ -127,7 +127,7 @@ const CommentCard = ({
                   {editMode && commentId === comment._id ? (
                     <PSForm onSubmit={editSubmit}>
                       <PSTextArea label="Edit your comment" name="comment" />
-                      <Button type="submit" className="my-2">
+                      <Button className="my-2" type="submit">
                         OK
                       </Button>
                     </PSForm>

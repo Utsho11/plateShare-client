@@ -1,6 +1,5 @@
 "use server";
 import axiosInstance from "@/src/lib/AxiosInstance";
-import { TComment } from "@/src/types";
 
 export const getComment = async (id: string) => {
   try {
@@ -25,7 +24,7 @@ export const postComment = async (commentData: {
   try {
     const { data } = await axiosInstance.post(
       `comment/add-comment`,
-      commentData
+      commentData,
     );
 
     return data;
@@ -46,7 +45,7 @@ export const editComment = async (commentData: {
   try {
     const { data } = await axiosInstance.put(
       `comment/edit-comment`,
-      commentData
+      commentData,
     );
 
     return data;

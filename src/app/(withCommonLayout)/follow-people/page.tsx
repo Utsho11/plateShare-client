@@ -1,10 +1,11 @@
 "use client";
+import { useRouter } from "next/navigation";
+
 import PeopleCard from "@/src/components/card/peopleCard";
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/user.provider";
 import { useGetUsers } from "@/src/hooks/users.hook";
 import { IUser } from "@/src/types";
-import { useRouter } from "next/navigation";
 
 const FollowPeoplePage = () => {
   const { data: peopleData, isLoading, isPending } = useGetUsers();

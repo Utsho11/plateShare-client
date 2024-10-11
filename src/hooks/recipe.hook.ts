@@ -2,10 +2,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import {
+  addRating,
   createRecipe,
   getAllRecipe,
+  getRating,
   getSingleRecipe,
+  setVote,
 } from "../services/Recipe";
+import { FieldValues } from "react-hook-form";
 
 export const useGetAllRecipe = () => {
   return useQuery({
@@ -35,5 +39,52 @@ export const useCreateRecipe = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+
+export const useSetVote = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, { voteType: string; recipeId: string }>({
+    mutationKey: ["SET_VOTE"],
+    mutationFn: async (voteData) => await setVote(voteData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["GET_RECIPE"] });
+      toast.success("Vote updated successfully.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useAddRating = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    any,
+    Error,
+    {
+      rating: number;
+      recipeId: string;
+    }
+  >({
+    mutationKey: ["ADD_RATING"],
+    mutationFn: async (ratingData) => await addRating(ratingData),
+    onSuccess: () => {
+      toast.success("Rating successfully done.");
+
+      queryClient.invalidateQueries({ queryKey: ["GET_RATING"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useGetRating = (id: string) => {
+  return useQuery({
+    queryKey: ["GET_RATING"],
+    queryFn: async () => await getRating(id),
   });
 };

@@ -1,16 +1,85 @@
 "use client";
+import { useState } from "react";
 import { Image } from "@nextui-org/image";
 import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
+import { Chip } from "@nextui-org/chip";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/modal";
+import { toast } from "sonner";
+
+import { ClockIcon, DownvoteIcon, RateIcon, UpvoteIcon } from "../icons";
 
 import { TRecipe } from "@/src/types";
+import {
+  useAddRating,
+  useGetRating,
+  useSetVote,
+} from "@/src/hooks/recipe.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
+  const { data: avgRating } = useGetRating(recipe._id);
+
   const router = useRouter();
+  const { mutate: setVote } = useSetVote();
+  const { mutate: addRating } = useAddRating();
+  const { user } = useUser();
+
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [rating, setRating] = useState(0); // State to store the user's rating
+
+  const handleRatingSubmit = () => {
+    const ratingData = {
+      rating: rating,
+      recipeId: recipe._id,
+    };
+
+    user && addRating(ratingData);
+
+    onOpenChange(); // Close the modal after rating submission
+  };
+
+  if (!user && !recipe) {
+    return <p>No Data Found</p>;
+  }
+
+  if (!avgRating) {
+    return <p>No Rating Found</p>;
+  }
 
   const handleRecipe = (id: string) => {
-    // Navigate to the recipe page using the id
-    router.push(`/all-recipe/${id}`);
+    if (user && user.email) {
+      if (recipe.recipeType === "FREE") {
+        router.push(`/all-recipe/${id}`);
+      } else if (recipe.recipeType === "PREMIUM" && user?.role === "PREMIUM") {
+        router.push(`/all-recipe/${id}`);
+      } else {
+        toast.error("Only Premium Users can access this recipe!");
+      }
+    } else {
+      toast.error("Please login to see the details!");
+      router.push("/login");
+    }
+  };
+
+  const handleVote = (id: string, vote: string) => {
+    if (!user) {
+      toast.warning("Login First!");
+      router.push("/login");
+    }
+    const data = {
+      voteType: vote,
+      recipeId: id,
+    };
+
+    user && setVote(data);
   };
 
   return (
@@ -26,16 +95,108 @@ const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
         <h3 className="text-xl font-bold">{recipe.name}</h3>
         <p className="text-sm">{recipe.category}</p>
       </div>
-      <div className="mt-4">
-        <div>
-          <p className="text-sm">
-            Time:{" "}
-            {recipe.cookingTime &&
-              `${parseInt(recipe.cookingTime.split(":")[0]) > 0 ? `${recipe.cookingTime.split(":")[0]}h ` : ""}${
-                recipe.cookingTime.split(":")[1]
-              }min`}
-          </p>
-          <span>{recipe.recipeType === "PREMIUM" ? "P" : ""}</span>
+      <div className="my-4">
+        <div className="flex justify-between items-center my-4">
+          <div className="flex gap-3">
+            <ClockIcon />
+            <p>
+              {recipe.cookingTime &&
+                `${parseInt(recipe.cookingTime.split(":")[0]) > 0 ? `${recipe.cookingTime.split(":")[0]}h ` : ""}${
+                  recipe.cookingTime.split(":")[1]
+                }min`}
+            </p>
+          </div>
+          <div className="">
+            {recipe.recipeType === "PREMIUM" ? (
+              <Chip color="warning">Premium</Chip>
+            ) : (
+              <Chip color="primary">Free</Chip>
+            )}
+          </div>
+        </div>
+        <hr />
+        <div className="flex gap-6 items-center justify-between my-4">
+          <div className=" flex flex-col items-center align-middle gap-1">
+            <p className="">{recipe.upvotes?.length} Like</p>
+            <Button
+              isIconOnly
+              className="bg-transparent "
+              onClick={() => handleVote(recipe._id, "upvotes")}
+            >
+              <UpvoteIcon
+                isFilled={recipe.upvotes?.includes(user?.email ?? "")}
+                size={20}
+              />
+            </Button>
+          </div>
+          <div className="flex flex-col items-center align-middle gap-1">
+            <p className="">Ratings:{avgRating.data}</p>
+            <Button
+              isIconOnly
+              className="flex items-center gap-2 bg-transparent"
+              onPress={onOpen}
+            >
+              <RateIcon
+                isFilled={recipe.downvotes?.includes(user?.email ?? "")}
+                size={20}
+              />
+            </Button>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1">
+                      Submit Your Rating
+                    </ModalHeader>
+
+                    <ModalBody>
+                      <p>Select a rating:</p>
+                      <div className="flex justify-center gap-2 my-4">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <RateIcon
+                            key={star}
+                            isFilled={star <= rating}
+                            size={30}
+                            onClick={() => setRating(star)} // Set the rating on icon click
+                          />
+                        ))}
+                      </div>
+
+                      <p className="text-gray-500">
+                        Your rating helps others to choose better!
+                      </p>
+                    </ModalBody>
+
+                    <ModalFooter>
+                      <Button color="danger" variant="light" onPress={onClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        color="primary"
+                        disabled={rating === 0} // Disable if no rating is selected
+                        onPress={handleRatingSubmit}
+                      >
+                        Submit
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
+          </div>
+          <div className="flex flex-col items-center align-middle gap-1">
+            <p className="">{recipe.downvotes?.length} DisLike</p>
+            <Button
+              isIconOnly
+              className="flex items-center gap-2 bg-transparent"
+              onClick={() => handleVote(recipe._id, "downvotes")}
+            >
+              <DownvoteIcon
+                isFilled={recipe.downvotes?.includes(user?.email ?? "")}
+                size={20}
+              />
+            </Button>
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-2 mt-4">

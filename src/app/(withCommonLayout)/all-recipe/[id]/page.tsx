@@ -24,7 +24,7 @@ const RecipeDetailsPage = ({ params: { id } }: IProps) => {
     <div>
       <RecipeDetailsCard recipe={recipe?.data as TRecipe} />
       <hr className="my-8" />
-      <CommentCard recipeId={id} comments={comments?.data as TComment[]} />
+      <CommentCard comments={comments?.data as TComment[]} recipeId={id} />
     </div>
   );
 };

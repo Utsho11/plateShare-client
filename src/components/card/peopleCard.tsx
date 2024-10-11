@@ -10,7 +10,7 @@ import { useAddFollower } from "@/src/hooks/users.hook";
 const PeopleCard = ({ people, user }: { people: IUser; user: IUser }) => {
   const [isFollowed, setIsFollowed] = useState(false);
 
-  const { mutate: handleFollower, isPending, isSuccess } = useAddFollower();
+  const { mutate: handleFollower } = useAddFollower();
 
   useEffect(() => {
     // Check if the logged-in user is already following this person

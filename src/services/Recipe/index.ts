@@ -53,3 +53,54 @@ export const getSingleRecipe = async (id: string) => {
     return data;
   }
 };
+
+export const setVote = async (voteData: {
+  voteType: string;
+  recipeId: string;
+}) => {
+  try {
+    const { data } = await axiosInstance.put(`recipe/vote-recipe`, voteData);
+
+    return data;
+  } catch (error: any) {
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
+  }
+};
+
+export const addRating = async (ratingData: {
+  rating: number;
+  recipeId: string;
+}) => {
+  try {
+    const { data } = await axiosInstance.post(`rating/add-rating`, ratingData);
+
+    return data;
+  } catch (error: any) {
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
+  }
+};
+
+export const getRating = async (recipeId: string) => {
+  try {
+    const { data } = await axiosInstance.get(`/rating/get-rating/${recipeId}`);
+
+    return data;
+  } catch (error: any) {
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
+  }
+};

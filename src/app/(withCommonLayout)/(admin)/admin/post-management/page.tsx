@@ -15,8 +15,6 @@ const PostManagementPage = () => {
     return <p>No users found</p>;
   }
 
-  console.log(recipe.data);
-
   return <PostTable recipies={recipe?.data as TRecipe[]} />;
 };
 
