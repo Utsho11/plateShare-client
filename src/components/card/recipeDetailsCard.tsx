@@ -46,11 +46,6 @@ const RecipeDetailsCard = ({ recipe }: { recipe: TRecipe }) => {
       {/* Recipe Details Section */}
       <div className="lg:w-1/2 flex flex-col gap-4">
         <h2 className="text-3xl font-bold">{name}</h2>
-        <h3 className="text-xl font-semibold mb-2">Cooking Method:</h3>
-        <p
-          dangerouslySetInnerHTML={{ __html: description }}
-          className="text-gray-700"
-        />
         <div>
           <h3 className="text-xl font-semibold mb-2">Ingredients:</h3>
           <ul className="list-disc pl-5">
@@ -61,6 +56,11 @@ const RecipeDetailsCard = ({ recipe }: { recipe: TRecipe }) => {
             ))}
           </ul>
         </div>
+        <h3 className="text-xl font-semibold mb-2">Cooking Method:</h3>
+        <p
+          dangerouslySetInnerHTML={{ __html: description }}
+          className="text-gray-700"
+        />
       </div>
     </div>
   );

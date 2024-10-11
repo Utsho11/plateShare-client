@@ -89,6 +89,12 @@ export default function RegisterPage() {
             <PSInput label="Email" name="email" size="sm" />
           </div>
           <div className="py-3">
+            <PSInput label="Age" name="age" size="sm" />
+          </div>
+          <div className="py-3">
+            <PSInput label="Location" name="location" size="sm" />
+          </div>
+          <div className="py-3">
             <PSInput label="Mobile Number" name="mobileNumber" size="sm" />
           </div>
           <div className="py-3">

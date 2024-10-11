@@ -119,10 +119,20 @@ const PostRecipePage = () => {
             <PSTimePicker label="Cooking Time" name="cookingTime" />
             <PSSelect
               label="Repice Type"
-              name="premium"
+              name="recipeType"
               options={[
-                { key: "premium", label: "premium" },
-                { key: "non-premium", label: "non-premium" },
+                { key: "PREMIUM", label: "Premium" },
+                { key: "FREE", label: "Free" },
+              ]}
+            />
+          </div>
+          <div className="grid lg:grid-cols-2 gap-3 my-3">
+            <PSSelect
+              label="Repice Status"
+              name="recipeStatus"
+              options={[
+                { key: "PUBLISH", label: "Publish" },
+                { key: "BLOCK", label: "Block" },
               ]}
             />
           </div>

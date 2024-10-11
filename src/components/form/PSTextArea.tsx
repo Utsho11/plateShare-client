@@ -7,7 +7,7 @@ interface IProps extends IInput {
   type?: string;
 }
 
-export default function FXTextArea({
+export default function PSTextArea({
   name,
   label,
   variant = "bordered",

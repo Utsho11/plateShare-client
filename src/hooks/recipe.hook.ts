@@ -7,6 +7,20 @@ import {
   getSingleRecipe,
 } from "../services/Recipe";
 
+export const useGetAllRecipe = () => {
+  return useQuery({
+    queryKey: ["GET_RECIPE"],
+    staleTime: 0,
+    queryFn: async () => await getAllRecipe(),
+  });
+};
+export const useGetSingleRecipe = (id: string) => {
+  return useQuery({
+    queryKey: ["GET_SINGLE_RECIPE"],
+    queryFn: async () => await getSingleRecipe(id),
+  });
+};
+
 export const useCreateRecipe = () => {
   const queryClient = useQueryClient();
 
@@ -21,18 +35,5 @@ export const useCreateRecipe = () => {
     onError: (error) => {
       toast.error(error.message);
     },
-  });
-};
-
-export const useGetAllRecipe = () => {
-  return useQuery({
-    queryKey: ["GET_RECIPE"],
-    queryFn: async () => await getAllRecipe(),
-  });
-};
-export const useGetSingleRecipe = (id: string) => {
-  return useQuery({
-    queryKey: ["GET_SINGLE_RECIPE"],
-    queryFn: async () => await getSingleRecipe(id),
   });
 };

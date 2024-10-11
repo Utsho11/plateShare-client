@@ -35,7 +35,7 @@ const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
                 recipe.cookingTime.split(":")[1]
               }min`}
           </p>
-          <span>{recipe.premium === "PREMIUM" ? "P" : ""}</span>
+          <span>{recipe.recipeType === "PREMIUM" ? "P" : ""}</span>
         </div>
       </div>
       <div className="flex flex-col gap-2 mt-4">

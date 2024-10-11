@@ -44,3 +44,10 @@ export type TRecipe = {
   upvotes?: string[];
   downvotes?: string[];
 };
+
+export type TComment = {
+  _id: string;
+  recipeId: string;
+  userId?: IUser;
+  comment: string;
+};

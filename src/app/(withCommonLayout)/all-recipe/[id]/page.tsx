@@ -1,8 +1,10 @@
 "use client";
+import CommentCard from "@/src/components/card/commentCard";
 import RecipeDetailsCard from "@/src/components/card/recipeDetailsCard";
 import Loading from "@/src/components/UI/Loading";
+import { useGetComment } from "@/src/hooks/comment.hook";
 import { useGetSingleRecipe } from "@/src/hooks/recipe.hook";
-import { TRecipe } from "@/src/types";
+import { TComment, TRecipe } from "@/src/types";
 
 interface IProps {
   params: {
@@ -12,12 +14,19 @@ interface IProps {
 
 const RecipeDetailsPage = ({ params: { id } }: IProps) => {
   const { data: recipe, isPending } = useGetSingleRecipe(id);
+  const { data: comments, isLoading: isCommentLoading } = useGetComment(id);
 
-  if (isPending) {
+  if (isPending || isCommentLoading) {
     return <Loading />;
   }
 
-  return <RecipeDetailsCard recipe={recipe?.data as TRecipe} />;
+  return (
+    <div>
+      <RecipeDetailsCard recipe={recipe?.data as TRecipe} />
+      <hr className="my-8" />
+      <CommentCard recipeId={id} comments={comments?.data as TComment[]} />
+    </div>
+  );
 };
 
 export default RecipeDetailsPage;
