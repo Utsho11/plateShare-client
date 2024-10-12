@@ -4,12 +4,13 @@ import { toast } from "sonner";
 import {
   addRating,
   createRecipe,
+  deleteRecipe,
   getAllRecipe,
   getRating,
   getSingleRecipe,
   setVote,
+  updateRecipeStatus,
 } from "../services/Recipe";
-import { FieldValues } from "react-hook-form";
 
 export const useGetAllRecipe = () => {
   return useQuery({
@@ -18,10 +19,52 @@ export const useGetAllRecipe = () => {
     queryFn: async () => await getAllRecipe(),
   });
 };
+
 export const useGetSingleRecipe = (id: string) => {
   return useQuery({
     queryKey: ["GET_SINGLE_RECIPE"],
     queryFn: async () => await getSingleRecipe(id),
+  });
+};
+
+export const useUpdateRecipeStatusIntoDB = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    any,
+    Error,
+    {
+      recipeId: string;
+      recipeStatus: string;
+    }
+  >({
+    mutationKey: ["UPDATE_RECIPE_STATUS"],
+    mutationFn: async (data) => await updateRecipeStatus(data),
+    onSuccess: () => {
+      toast.success("Recipe Status Changed successfully.");
+
+      queryClient.invalidateQueries({ queryKey: ["GET_RECIPE"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useDeleteRecipeIntoDB = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, string>({
+    mutationKey: ["DELETE_RECIPE"],
+    mutationFn: async (id) => await deleteRecipe(id),
+    onSuccess: () => {
+      toast.success("Recipe is deleted successfully.");
+
+      queryClient.invalidateQueries({ queryKey: ["GET_RECIPE"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
   });
 };
 
@@ -82,9 +125,9 @@ export const useAddRating = () => {
   });
 };
 
-export const useGetRating = (id: string) => {
+export const useGetRating = () => {
   return useQuery({
     queryKey: ["GET_RATING"],
-    queryFn: async () => await getRating(id),
+    queryFn: async () => await getRating(),
   });
 };

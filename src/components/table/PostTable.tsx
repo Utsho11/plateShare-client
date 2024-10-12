@@ -23,8 +23,15 @@ import {
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Pagination } from "@nextui-org/pagination";
+import { Tooltip } from "@nextui-org/tooltip";
 
-import { ChevronDownIcon, SearchIcon, VerticalDotsIcon } from "../icons";
+import {
+  ChevronDownIcon,
+  RecipeBlockIcon,
+  RecipePublishIcon,
+  SearchIcon,
+  TrashIcon,
+} from "../icons";
 
 import { capitalize } from "@/src/utils/user.utils";
 import { TRecipe } from "@/src/types";
@@ -33,6 +40,10 @@ import {
   recipeStatusOptions,
   typeOptions,
 } from "@/src/constants";
+import {
+  useDeleteRecipeIntoDB,
+  useUpdateRecipeStatusIntoDB,
+} from "@/src/hooks/recipe.hook";
 
 const statusColorMap: Record<string, ChipVariantProps["color"]> = {
   PUBLISH: "success",
@@ -61,6 +72,22 @@ export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
   const [page, setPage] = useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
+
+  const { mutate: changeRecipeStatus } = useUpdateRecipeStatusIntoDB();
+  const { mutate: deleteRecipe } = useDeleteRecipeIntoDB();
+
+  const handleDeleteRecipe = (id: string) => {
+    console.log(id);
+    deleteRecipe(id);
+  };
+  const handleRecipeStatus = (id: string, status: string) => {
+    const data = {
+      recipeId: id,
+      recipeStatus: status,
+    };
+
+    changeRecipeStatus(data);
+  };
 
   const headerColumns = useMemo(() => {
     if (visibleColumns === "all") return recipeColumns;
@@ -160,18 +187,36 @@ export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
+            {recipe.recipeStatus === "PUBLISH" ? (
+              <Tooltip content="Block Recipe">
+                <Button
+                  isIconOnly
+                  className="bg-transparent"
+                  onClick={() => handleRecipeStatus(recipe._id, "BLOCK")}
+                >
+                  <RecipeBlockIcon size={20} />
                 </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+              </Tooltip>
+            ) : (
+              <Tooltip content="Publish Recipe">
+                <Button
+                  isIconOnly
+                  className="bg-transparent"
+                  onClick={() => handleRecipeStatus(recipe._id, "PUBLISH")}
+                >
+                  <RecipePublishIcon size={20} />
+                </Button>
+              </Tooltip>
+            )}
+            <Tooltip content="Delete Recipe">
+              <Button
+                isIconOnly
+                className="bg-transparent"
+                onClick={() => handleDeleteRecipe(recipe._id)}
+              >
+                <TrashIcon size={20} />
+              </Button>
+            </Tooltip>
           </div>
         );
       default:

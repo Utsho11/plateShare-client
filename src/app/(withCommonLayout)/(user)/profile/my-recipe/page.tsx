@@ -17,7 +17,7 @@ const MyRecipePage = () => {
     return <p>No users found</p>;
   }
   const myRecipe = recipe.data.filter((r: TRecipe) =>
-    r.email.includes(user?.email ?? "")
+    r.email.includes(user?.email ?? ""),
   );
 
   return <PostTable recipies={myRecipe as TRecipe[]} />;

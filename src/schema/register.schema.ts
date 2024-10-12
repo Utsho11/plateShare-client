@@ -3,6 +3,8 @@ import { z } from "zod";
 const registerValidationSchema = z.object({
   name: z.string().min(1, "Please enter your name!"),
   email: z.string().email("Please enter a valid email address!"),
+  age: z.string().min(1, "Please enter your age!"), // Added a max age for validation
+  location: z.string().min(1, "Please enter your location!"), // Added validation for location
   mobileNumber: z
     .string()
     .regex(/^\d{11}$/, "Please enter a valid mobile number!"),

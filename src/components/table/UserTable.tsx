@@ -22,17 +22,27 @@ import {
   TableRow,
 } from "@nextui-org/table";
 import { Pagination } from "@nextui-org/pagination";
+import Link from "next/link";
+import { Tooltip } from "@nextui-org/tooltip";
+import { toast } from "sonner";
 
 import {
   ChevronDownIcon,
   PlusIcon,
   SearchIcon,
-  VerticalDotsIcon,
+  TrashIcon,
+  UserBlockIcon,
+  UserCheckIcon,
 } from "../icons";
 
 import { columns, roleOptions, statusOptions } from "@/src/constants";
 import { capitalize } from "@/src/utils/user.utils";
 import { IUser } from "@/src/types";
+import {
+  useDeleteUserIntoDB,
+  useUpdateUserStatusIntoDB,
+} from "@/src/hooks/users.hook";
+import { useUser } from "@/src/context/user.provider";
 
 const statusColorMap: Record<string, ChipVariantProps["color"]> = {
   ACTIVE: "success",
@@ -44,7 +54,7 @@ const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
 export const UserTable = ({ users }: { users: IUser[] }) => {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
-    new Set(INITIAL_VISIBLE_COLUMNS),
+    new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = useState<Selection>("all");
   const [roleFilter, setRoleFilter] = useState<Selection>("all");
@@ -54,6 +64,31 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
     direction: "ascending",
   });
 
+  const { mutate: updateUserStatus } = useUpdateUserStatusIntoDB();
+  const { mutate: deleteUser } = useDeleteUserIntoDB();
+
+  const { user } = useUser();
+
+  const handleDeleteUser = (id: string) => {
+    if (user?._id === id) {
+      toast.warning("This user can't be deleted by himself");
+    } else {
+      deleteUser(id);
+    }
+  };
+  const handleUserStatus = (id: string, status: string) => {
+    if (user?._id === id) {
+      toast.warning("This user can't be blocked by himself");
+    } else {
+      const data = {
+        userId: id,
+        status: status,
+      };
+
+      updateUserStatus(data);
+    }
+  };
+
   const [page, setPage] = useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -62,7 +97,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
     if (visibleColumns === "all") return columns;
 
     return columns.filter((column) =>
-      Array.from(visibleColumns).includes(column.uid),
+      Array.from(visibleColumns).includes(column.uid)
     );
   }, [visibleColumns]);
 
@@ -71,7 +106,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+        user.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
@@ -79,7 +114,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
       Array.from(statusFilter).length !== statusOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
+        Array.from(statusFilter).includes(user.status)
       );
     }
     if (
@@ -87,7 +122,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
       Array.from(roleFilter).length !== roleOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(roleFilter).includes(user.role),
+        Array.from(roleFilter).includes(user.role)
       );
     }
 
@@ -150,18 +185,36 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
+            {user.status === "ACTIVE" ? (
+              <Tooltip content="Block User">
+                <Button
+                  isIconOnly
+                  className="bg-transparent"
+                  onClick={() => handleUserStatus(user._id, "BLOCK")}
+                >
+                  <UserBlockIcon size={20} />
                 </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+              </Tooltip>
+            ) : (
+              <Tooltip content="Active User">
+                <Button
+                  isIconOnly
+                  className="bg-transparent"
+                  onClick={() => handleUserStatus(user._id, "ACTIVE")}
+                >
+                  <UserCheckIcon size={20} />
+                </Button>
+              </Tooltip>
+            )}
+            <Tooltip content="Delete User">
+              <Button
+                isIconOnly
+                className="bg-transparent"
+                onClick={() => handleDeleteUser(user._id)}
+              >
+                <TrashIcon size={20} />
+              </Button>
+            </Tooltip>
           </div>
         );
       default:
@@ -186,7 +239,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
       setRowsPerPage(Number(e.target.value));
       setPage(1);
     },
-    [],
+    []
   );
 
   const onSearchChange = useCallback((value?: string) => {
@@ -289,9 +342,11 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<PlusIcon />}>
-              Add New
-            </Button>
+            <Link href="/admin/create-admin">
+              <Button color="primary" endContent={<PlusIcon />}>
+                Add Admin
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="flex justify-between items-center">

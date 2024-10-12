@@ -53,3 +53,9 @@ export type TComment = {
   userId?: IUser;
   comment: string;
 };
+
+export interface TCategory {
+  _id: string;
+  name: string;
+  isDeleted: boolean;
+}

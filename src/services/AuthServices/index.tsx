@@ -55,7 +55,7 @@ export const changePassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       "/auth/change-password",
-      userData,
+      userData
     );
 
     return data;

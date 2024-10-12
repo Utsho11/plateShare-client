@@ -54,6 +54,42 @@ export const getSingleRecipe = async (id: string) => {
   }
 };
 
+export const deleteRecipe = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.delete(`recipe/delete-recipe/${id}`);
+
+    return data;
+  } catch (error: any) {
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
+  }
+};
+
+export const updateRecipeStatus = async (payload: {
+  recipeId: string;
+  recipeStatus: string;
+}) => {
+  try {
+    const { data } = await axiosInstance.put(
+      `recipe/update-recipe-status`,
+      payload
+    );
+
+    return data;
+  } catch (error: any) {
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
+  }
+};
+
 export const setVote = async (voteData: {
   voteType: string;
   recipeId: string;
@@ -90,9 +126,9 @@ export const addRating = async (ratingData: {
   }
 };
 
-export const getRating = async (recipeId: string) => {
+export const getRating = async () => {
   try {
-    const { data } = await axiosInstance.get(`/rating/get-rating/${recipeId}`);
+    const { data } = await axiosInstance.get(`/rating/get-rating`);
 
     return data;
   } catch (error: any) {

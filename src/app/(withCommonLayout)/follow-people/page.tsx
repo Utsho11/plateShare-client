@@ -9,10 +9,16 @@ import { IUser } from "@/src/types";
 
 const FollowPeoplePage = () => {
   const { data: peopleData, isLoading, isPending } = useGetUsers();
-
   const router = useRouter();
-
   const { user } = useUser();
+
+  if (!peopleData) {
+    return <div>There is no people to follow.</div>;
+  }
+
+  const filterPeople = peopleData?.data?.filter(
+    (user: IUser) => user.status === "ACTIVE"
+  );
 
   if (isLoading || isPending) {
     return <Loading />;
@@ -22,13 +28,9 @@ const FollowPeoplePage = () => {
     return router.push("/login");
   }
 
-  if (!peopleData) {
-    return <div>There is no people to follow.</div>;
-  }
-
   return (
     <div className="grid sm:grid-cols-3 gap-3 py-8">
-      {peopleData?.data?.map((people: IUser) => (
+      {filterPeople?.map((people: IUser) => (
         <PeopleCard key={people._id} people={people} user={user as IUser} />
       ))}
     </div>

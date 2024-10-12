@@ -24,8 +24,15 @@ import {
 } from "@/src/hooks/recipe.hook";
 import { useUser } from "@/src/context/user.provider";
 
+export interface TRating {
+  recipeId: string;
+  recipeName: string;
+  averageRating: number;
+  totalRatings: number;
+}
+
 const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
-  const { data: avgRating } = useGetRating(recipe._id);
+  const { data: ratingData } = useGetRating();
 
   const router = useRouter();
   const { mutate: setVote } = useSetVote();
@@ -34,6 +41,16 @@ const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [rating, setRating] = useState(0); // State to store the user's rating
+
+  let averageRating;
+
+  if (ratingData) {
+    const avgRating = ratingData?.data.filter(
+      (Item: TRating) => Item.recipeId === recipe._id
+    );
+
+    averageRating = avgRating[0].averageRating;
+  }
 
   const handleRatingSubmit = () => {
     const ratingData = {
@@ -47,11 +64,10 @@ const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
   };
 
   if (!user && !recipe) {
-    return <p>No Data Found</p>;
+    return <p>Loading...</p>;
   }
-
-  if (!avgRating) {
-    return <p>No Rating Found</p>;
+  if (!ratingData) {
+    return <p>Loading...</p>;
   }
 
   const handleRecipe = (id: string) => {
@@ -130,7 +146,7 @@ const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
             </Button>
           </div>
           <div className="flex flex-col items-center align-middle gap-1">
-            <p className="">Ratings:{avgRating.data}</p>
+            <p className="">Ratings: {averageRating}</p>
             <Button
               isIconOnly
               className="flex items-center gap-2 bg-transparent"

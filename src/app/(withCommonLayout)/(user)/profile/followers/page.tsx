@@ -19,7 +19,7 @@ const FollowersPage = () => {
 
   const followers: IUser[] = allUsers.data.filter(
     (u: IUser) =>
-      u._id !== user._id && u.followings && u.followings.includes(user._id)
+      u._id !== user._id && u.followings && u.followings.includes(user._id),
   );
 
   console.log(followers);

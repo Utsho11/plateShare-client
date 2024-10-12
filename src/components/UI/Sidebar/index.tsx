@@ -36,7 +36,13 @@ const Sidebar = () => {
             <EditIcon /> Edit Profile
           </Button>
         ) : (
-          ""
+          <Button
+            as={Link}
+            className="mt-2 w-full rounded-md"
+            href={"/admin/edit-admin"}
+          >
+            <EditIcon /> Edit Profile
+          </Button>
         )}
       </div>
       <div className="mt-3 space-y-2 rounded-xl bg-default-100 p-2">

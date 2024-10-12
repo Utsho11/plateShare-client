@@ -566,19 +566,100 @@ export const DownvoteIcon: React.FC<IconSvgProps> = ({
 export const ClockIcon: React.FC<IconSvgProps> = () => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      className="lucide lucide-clock-4"
       fill="none"
+      height="24"
       stroke="currentColor"
-      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-clock-4"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
     >
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
+    </svg>
+  );
+};
+
+export const UserCheckIcon: React.FC<IconSvgProps> = ({ size }) => {
+  return (
+    <svg
+      className="lucide lucide-user-check"
+      fill="none"
+      height={size}
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <polyline points="16 11 18 13 22 9" />
+    </svg>
+  );
+};
+export const UserBlockIcon: React.FC<IconSvgProps> = ({ size }) => {
+  return (
+    <svg
+      className="lucide lucide-user-x"
+      fill="none"
+      height={size}
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <line x1="17" x2="22" y1="8" y2="13" />
+      <line x1="22" x2="17" y1="8" y2="13" />
+    </svg>
+  );
+};
+export const RecipeBlockIcon: React.FC<IconSvgProps> = ({ size }) => {
+  return (
+    <svg
+      className="lucide lucide-ban"
+      fill="none"
+      height={size}
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="m4.9 4.9 14.2 14.2" />
+    </svg>
+  );
+};
+export const RecipePublishIcon: React.FC<IconSvgProps> = ({ size }) => {
+  return (
+    <svg
+      className="lucide lucide-share"
+      fill="none"
+      height={size}
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+      <polyline points="16 6 12 2 8 6" />
+      <line x1="12" x2="12" y1="2" y2="15" />
     </svg>
   );
 };
@@ -590,16 +671,16 @@ export const RateIcon: React.FC<IconSvgProps> = ({
 }) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
+      className="lucide lucide-star"
       fill={isFilled ? "currentColor" : "none"}
+      height={size}
       stroke="currentColor"
-      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="lucide lucide-star"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width={size}
+      xmlns="http://www.w3.org/2000/svg"
       onClick={onClick}
     >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
