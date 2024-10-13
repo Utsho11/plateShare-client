@@ -9,9 +9,9 @@ PLATESHARE
 
 ## Live URL:
 
-- [Book My Court Client](https://plate-share.vercel.app/)
+- [PLATESHARE Client](https://plate-share.vercel.app/)
 
-- [Book My Court Server](https://plate-share-server.vercel.app/)
+- [PLATESHARE Server](https://plate-share-server.vercel.app/)
 
 ## Features:
 
