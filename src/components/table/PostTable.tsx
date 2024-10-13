@@ -59,7 +59,7 @@ const INITIAL_VISIBLE_COLUMNS = ["name", "type", "status", "actions"];
 export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
-    new Set(INITIAL_VISIBLE_COLUMNS)
+    new Set(INITIAL_VISIBLE_COLUMNS),
   );
   const [statusFilter, setStatusFilter] = useState<Selection>("all");
   const [typeFilter, setRoleFilter] = useState<Selection>("all");
@@ -93,7 +93,7 @@ export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
     if (visibleColumns === "all") return recipeColumns;
 
     return recipeColumns.filter((column) =>
-      Array.from(visibleColumns).includes(column.uid)
+      Array.from(visibleColumns).includes(column.uid),
     );
   }, [visibleColumns]);
 
@@ -102,7 +102,7 @@ export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((recipe) =>
-        recipe.name.toLowerCase().includes(filterValue.toLowerCase())
+        recipe.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (
@@ -110,7 +110,7 @@ export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
       Array.from(statusFilter).length !== recipeStatusOptions.length
     ) {
       filteredUsers = filteredUsers.filter((recipe) =>
-        Array.from(statusFilter).includes(recipe.recipeStatus)
+        Array.from(statusFilter).includes(recipe.recipeStatus),
       );
     }
     if (
@@ -118,7 +118,7 @@ export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
       Array.from(typeFilter).length !== typeOptions.length
     ) {
       filteredUsers = filteredUsers.filter((recipe) =>
-        Array.from(typeFilter).includes(recipe.recipeType)
+        Array.from(typeFilter).includes(recipe.recipeType),
       );
     }
 
@@ -241,7 +241,7 @@ export const PostTable = ({ recipies }: { recipies: TRecipe[] }) => {
       setRowsPerPage(Number(e.target.value));
       setPage(1);
     },
-    []
+    [],
   );
 
   const onSearchChange = useCallback((value?: string) => {

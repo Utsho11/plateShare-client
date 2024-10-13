@@ -10,7 +10,7 @@ export const createRecipe = async (recipeData: FormData) => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     return data;
@@ -76,7 +76,7 @@ export const updateRecipeStatus = async (payload: {
   try {
     const { data } = await axiosInstance.put(
       `recipe/update-recipe-status`,
-      payload
+      payload,
     );
 
     return data;

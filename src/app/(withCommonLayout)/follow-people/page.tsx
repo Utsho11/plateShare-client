@@ -17,7 +17,7 @@ const FollowPeoplePage = () => {
   }
 
   const filterPeople = peopleData?.data?.filter(
-    (user: IUser) => user.status === "ACTIVE"
+    (user: IUser) => user.status === "ACTIVE",
   );
 
   if (isLoading || isPending) {

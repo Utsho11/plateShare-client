@@ -14,6 +14,8 @@ export interface IUser {
   status: string;
   mobileNumber: string;
   profilePhoto: string;
+  age?: string | number;
+  location?: string;
   followers?: string[];
   followings?: string[];
   createdAt?: string;

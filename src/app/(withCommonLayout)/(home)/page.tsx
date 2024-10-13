@@ -1,9 +1,9 @@
-import Landing from "@/src/components/modules/home/Landing";
+import FeaturedPosts from "@/src/components/modules/home/FeaturedPosts";
 
 const Home = () => {
   return (
     <>
-      <Landing />
+      <FeaturedPosts />
     </>
   );
 };

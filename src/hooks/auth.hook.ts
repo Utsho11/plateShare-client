@@ -6,6 +6,7 @@ import {
   changePassword,
   loginUser,
   registerUser,
+  sendEmail,
   subscribeUser,
 } from "../services/AuthServices";
 
@@ -51,6 +52,18 @@ export const useUserSubscription = () => {
         window.location.href = response.data;
       }
       queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useSendEmail = () => {
+  return useMutation<any, Error, FieldValues>({
+    mutationFn: async (data) => await sendEmail(data),
+    onSuccess: () => {
+      toast.success("Email sent successfully.");
     },
     onError: (error) => {
       toast.error(error.message);

@@ -54,7 +54,7 @@ const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
 export const UserTable = ({ users }: { users: IUser[] }) => {
   const [filterValue, setFilterValue] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Selection>(
-    new Set(INITIAL_VISIBLE_COLUMNS)
+    new Set(INITIAL_VISIBLE_COLUMNS),
   );
   const [statusFilter, setStatusFilter] = useState<Selection>("all");
   const [roleFilter, setRoleFilter] = useState<Selection>("all");
@@ -97,7 +97,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
     if (visibleColumns === "all") return columns;
 
     return columns.filter((column) =>
-      Array.from(visibleColumns).includes(column.uid)
+      Array.from(visibleColumns).includes(column.uid),
     );
   }, [visibleColumns]);
 
@@ -106,7 +106,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
+        user.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (
@@ -114,7 +114,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
       Array.from(statusFilter).length !== statusOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status)
+        Array.from(statusFilter).includes(user.status),
       );
     }
     if (
@@ -122,7 +122,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
       Array.from(roleFilter).length !== roleOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(roleFilter).includes(user.role)
+        Array.from(roleFilter).includes(user.role),
       );
     }
 
@@ -239,7 +239,7 @@ export const UserTable = ({ users }: { users: IUser[] }) => {
       setRowsPerPage(Number(e.target.value));
       setPage(1);
     },
-    []
+    [],
   );
 
   const onSearchChange = useCallback((value?: string) => {

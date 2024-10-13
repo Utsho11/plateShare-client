@@ -18,6 +18,29 @@ export const getUsers = async () => {
   }
 };
 
+export const updateUser = async (userId: string, userData: FormData) => {
+  try {
+    // Make the request to the update user endpoint
+    const { data } = await axiosInstance.put(
+      `/users/update-user/${userId}`,
+      userData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+
+    return data; // Return the response data
+  } catch (error: any) {
+    // Return error message in a consistent format
+    return {
+      success: false,
+      message: error?.response?.data?.message || "Failed to update user",
+    };
+  }
+};
+
 export const updateUserStatus = async (payload: {
   userId: string;
   status: string;
@@ -25,7 +48,7 @@ export const updateUserStatus = async (payload: {
   try {
     const { data } = await axiosInstance.put(
       `users/update-user-status`,
-      payload
+      payload,
     );
 
     return data;
@@ -58,7 +81,7 @@ export const addFollowing = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.patch(
       "/users/add-following",
-      userData
+      userData,
     );
 
     return data;

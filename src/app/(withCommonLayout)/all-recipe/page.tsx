@@ -29,7 +29,7 @@ const AllRecipePage = () => {
   }
 
   const filterRecipe = recipeData?.data?.filter(
-    (recipe: TRecipe) => recipe.recipeStatus === "PUBLISH"
+    (recipe: TRecipe) => recipe.recipeStatus === "PUBLISH",
   );
 
   // Search and category filtering function
@@ -43,7 +43,7 @@ const AllRecipePage = () => {
       .includes(searchTerm.toLowerCase());
 
     const ingredientsMatch = recipe.ingredients.some((ingredient: string) =>
-      ingredient.toLowerCase().includes(searchTerm.toLowerCase())
+      ingredient.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     // Filter by selected category if one is chosen

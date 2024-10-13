@@ -55,7 +55,7 @@ export const changePassword = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post(
       "/auth/change-password",
-      userData
+      userData,
     );
 
     return data;
@@ -90,6 +90,21 @@ export const subscribeUser = async (userId: FieldValues) => {
   }
 };
 
+export const sendEmail = async (mailData: FieldValues) => {
+  try {
+    const { data } = await axiosInstance.post("/auth/send-mail", mailData);
+
+    return data;
+  } catch (error: any) {
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
+  }
+};
+
 //get user from token
 
 export const getCurrentUser = async () => {
@@ -105,12 +120,12 @@ export const getCurrentUser = async () => {
         _id: decodedToken._id,
         name: decodedToken.name,
         email: decodedToken.email,
+        age: decodedToken.age,
+        location: decodedToken.location,
         mobileNumber: decodedToken.mobileNumber,
         role: decodedToken.role,
         status: decodedToken.status,
         profilePhoto: decodedToken.profilePhoto,
-        followers: decodedToken.followers,
-        followings: decodedToken.followings,
       };
     }
 

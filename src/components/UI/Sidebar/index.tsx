@@ -4,14 +4,26 @@ import Link from "next/link";
 import { Image } from "@nextui-org/image";
 
 import { EditIcon } from "../../icons";
+import Loading from "../Loading";
 
 import { SidebarOptions } from "./SidebarOptions";
 import { adminLinks, userLinks } from "./constants";
 
 import { useUser } from "@/src/context/user.provider";
+import { IUser } from "@/src/types";
+import { useGetUsers } from "@/src/hooks/users.hook";
 
 const Sidebar = () => {
   const { user } = useUser();
+
+  const { data: userData, isLoading } = useGetUsers();
+
+  // Check if data is still loading
+  if (isLoading || !userData || !user) {
+    return <Loading />;
+  }
+
+  const currentUser = userData?.data?.filter((u: IUser) => u._id === user._id);
 
   return (
     <div>
@@ -20,14 +32,14 @@ const Sidebar = () => {
           <Image
             alt="item"
             className="object-cover object-center rounded-md"
-            src={user?.profilePhoto as string}
+            src={currentUser[0]?.profilePhoto as string}
           />
         </div>
         <div className="my-3 text-white">
-          <h1 className="text-2xl font-semibold">{user?.name}</h1>
-          <p className="break-words text-sm">{user?.email}</p>
+          <h1 className="text-2xl font-semibold">{currentUser[0]?.name}</h1>
+          <p className="break-words text-sm">{currentUser[0]?.email}</p>
         </div>
-        {user?.role === "USER" ? (
+        {currentUser[0]?.role === "USER" ? (
           <Button
             as={Link}
             className="mt-2 w-full rounded-md"
@@ -47,7 +59,7 @@ const Sidebar = () => {
       </div>
       <div className="mt-3 space-y-2 rounded-xl bg-default-100 p-2">
         <SidebarOptions
-          links={user?.role === "ADMIN" ? adminLinks : userLinks}
+          links={currentUser[0]?.role === "ADMIN" ? adminLinks : userLinks}
         />
       </div>
     </div>

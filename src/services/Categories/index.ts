@@ -33,3 +33,20 @@ export const postCategory = async (category: FieldValues) => {
     return data;
   }
 };
+
+export const deleteCategory = async (id: string) => {
+  try {
+    const { data } = await axiosInstance.delete(
+      `category/delete-category/${id}`,
+    );
+
+    return data;
+  } catch (error: any) {
+    const data = {
+      success: false,
+      message: error?.response?.data?.message,
+    };
+
+    return data;
+  }
+};

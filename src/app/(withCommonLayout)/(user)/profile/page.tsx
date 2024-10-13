@@ -6,15 +6,20 @@ import { useGetUsers } from "@/src/hooks/users.hook";
 import { IUser } from "@/src/types";
 
 export default function Profile() {
-  const { user } = useUser();
+  const { user, isLoading: isUserLoading } = useUser();
   const { data: userData, isLoading } = useGetUsers();
 
   // Check if data is still loading
-  if (isLoading || !userData || !user) {
+  if (!user || isLoading || isUserLoading) {
     return <Loading />;
   }
 
-  const currentUser = userData?.data?.filter((u: IUser) => u._id === user._id);
+  if (!user || !userData) {
+    return <h1 className="text-5xl font-semibold">NO DATA FOUND!!!</h1>;
+  }
+
+  const currentUser =
+    userData && userData?.data?.filter((u: IUser) => u._id === user._id);
 
   return (
     <div className="text-white bg-[#170F21] py-8 px-5 rounded">

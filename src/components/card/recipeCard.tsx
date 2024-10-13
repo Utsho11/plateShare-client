@@ -46,7 +46,7 @@ const RecipeCard = ({ recipe }: { recipe: TRecipe }) => {
 
   if (ratingData) {
     const avgRating = ratingData?.data.filter(
-      (Item: TRating) => Item.recipeId === recipe._id
+      (Item: TRating) => Item.recipeId === recipe._id,
     );
 
     averageRating = avgRating[0].averageRating;

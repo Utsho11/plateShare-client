@@ -51,31 +51,31 @@ const AboutPage = () => {
       <div className="flex flex-col sm:flex-row justify-center gap-6 mb-12">
         <div className="flex flex-col items-center hover:scale-105 transition-transform">
           <Image
-            src={person1}
             alt="Team Member 1"
-            width={300}
-            height={300}
             className="rounded-xl shadow-md object-cover"
+            height={300}
+            src={person1}
+            width={300}
           />
           <h3 className="mt-2 text-lg font-semibold">Alice Johnson</h3>
         </div>
         <div className="flex flex-col items-center hover:scale-105 transition-transform">
           <Image
-            src={person2}
             alt="Team Member 2"
-            width={300}
-            height={300}
             className="rounded-xl shadow-md object-cover"
+            height={300}
+            src={person2}
+            width={300}
           />
           <h3 className="mt-2 text-lg font-semibold">Bob Smith</h3>
         </div>
         <div className="flex flex-col items-center hover:scale-105 transition-transform">
           <Image
-            src={person3}
             alt="Team Member 3"
-            width={300}
-            height={300}
             className="rounded-xl shadow-md object-cover"
+            height={300}
+            src={person3}
+            width={300}
           />
           <h3 className="mt-2 text-lg font-semibold">Merry Davis</h3>
         </div>
