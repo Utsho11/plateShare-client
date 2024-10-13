@@ -39,11 +39,11 @@ const Sidebar = () => {
           <h1 className="text-2xl font-semibold">{currentUser[0]?.name}</h1>
           <p className="break-words text-sm">{currentUser[0]?.email}</p>
         </div>
-        {currentUser[0]?.role === "USER" ? (
+        {currentUser[0]?.role === "ADMIN" ? (
           <Button
             as={Link}
             className="mt-2 w-full rounded-md"
-            href={"/profile/edit-profile"}
+            href={"/admin/edit-admin"}
           >
             <EditIcon /> Edit Profile
           </Button>
@@ -51,7 +51,7 @@ const Sidebar = () => {
           <Button
             as={Link}
             className="mt-2 w-full rounded-md"
-            href={"/admin/edit-admin"}
+            href={"/profile/edit-profile"}
           >
             <EditIcon /> Edit Profile
           </Button>

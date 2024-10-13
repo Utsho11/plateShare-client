@@ -46,11 +46,9 @@ export const useUserSubscription = () => {
   return useMutation<any, Error, FieldValues>({
     mutationKey: ["USER_SUBSCRIPTION"],
     mutationFn: async (userId) => await subscribeUser(userId),
-    onSuccess: (response) => {
+    onSuccess: () => {
       toast.loading("redirecting to payment page...");
-      if (response.data) {
-        window.location.href = response.data;
-      }
+
       queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
     },
     onError: (error) => {

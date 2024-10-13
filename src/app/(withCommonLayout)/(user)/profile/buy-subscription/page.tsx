@@ -1,5 +1,7 @@
 "use client";
 import { Button } from "@nextui-org/button";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { useUser } from "@/src/context/user.provider";
 import { useUserSubscription } from "@/src/hooks/auth.hook";
@@ -9,7 +11,20 @@ import { useGetUsers } from "@/src/hooks/users.hook";
 const SubscriptionPage = () => {
   const { user } = useUser();
   const { data: userData, isLoading } = useGetUsers();
-  const { mutate: handleUserSubscription, isPending } = useUserSubscription();
+  const {
+    mutate: handleUserSubscription,
+    data,
+    isPending,
+    isSuccess,
+  } = useUserSubscription();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data && isSuccess) {
+      router.push(data?.data); // Redirects to the URL returned in data.data
+    }
+  }, [data, isSuccess, router]);
 
   // Check if data is still loading
   if (isLoading || !userData || !user) {

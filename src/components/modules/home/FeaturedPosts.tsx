@@ -27,10 +27,11 @@ const FeaturedPosts = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Example Recipe Cards */}
-          {recipeData.data.slice(0, 2).map((r: TRecipe, index: number) => (
+          {recipeData.data.slice(0, 3).map((r: TRecipe, index: number) => (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              className="
+h-full w-full bg-gray-600 rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-10 border border-gray-100 p-2 text-neutral-500"
             >
               <Image
                 alt={`Recipe ${index + 1}`}
